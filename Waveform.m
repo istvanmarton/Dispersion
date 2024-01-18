@@ -1,12 +1,13 @@
 pkg load ltfat
-Dispersion_value = -10:10:10;
-CEP_value = 0:120:357;
-TOD = 0e3;
-FOD = 0e5;
+GDD = 0;
+TOD = 0;
+FOD = 0;
+value = -10:10:10;
+CEP_value = 0:60:357;
 i=sqrt(-1);
 change_time = 41.34137333518211; 
 Intensity = 1e15; #Intensity in W/cm2;
-PulseWidth = 7;
+PulseWidth = 7; # intensity FWHM (full width at half maximum) in femtoseconds.
 Wavelength = 800; # Wavelength in nm
 omega = 137.04 * 2 * pi / (18.897 * Wavelength);
 Amplitude = sqrt(2 * Intensity/299792458/8.8541878176e-12)/5.14220674763e9;
@@ -14,25 +15,25 @@ sigma = change_time * PulseWidth/sqrt(8 * log (2));
 twosigmasquare = 2 * sigma^2;
 time_factor = 8;
 
-for i_Dispersion=1:length(Dispersion_value)
+for i_Dispersion=1:length(value)
+GDD = value(i_Dispersion);
+
 t = []; f = []; carrier = []; E_field_tin = []; E_field_omegain = []; fi_omega = []; E_field_omegaout = []; E_field_tout = [];
-
-Dispersion = Dispersion_value(i_Dispersion);
-
-PulseWidth_analytical_Dispersion = PulseWidth * sqrt(1+(4*log(2))^2*Dispersion^2/(PulseWidth^4));
+PulseWidth_analytical_Dispersion = PulseWidth * sqrt(1+(4*log(2))^2*GDD^2/(PulseWidth^4));
 PulseWidth_analytical_TOD = sqrt(PulseWidth^2/2/log(2) + 8 * (log(2))^2 * (TOD/PulseWidth)^2);
-sigma_analytical_Dispersion = change_time * PulseWidth_analytical_Dispersion/sqrt(8 * log (2));
-PulseWidth_analytical_FOD = 1 * PulseWidth * (1+(4*log(2))^2*FOD^1/(PulseWidth^4))^1;
-sigma_analytical_FOD = change_time * PulseWidth_analytical_FOD/sqrt(8 * log (2));
+PulseWidth_analytical_FOD = 1 * PulseWidth * (1+(4*log(2))^2*(abs(FOD))^1/(PulseWidth^4))^1;
+sigma_analytical_Dispersion = 41.341 * PulseWidth_analytical_Dispersion/sqrt(8 * log (2));
+sigma_analytical_TOD = 41.341 * PulseWidth_analytical_TOD/sqrt(8 * log (2));
+sigma_analytical_FOD = 41.341 * PulseWidth_analytical_FOD/sqrt(8 * log (2));
 
 begin_Dispersion = -time_factor  * sigma_analytical_Dispersion;
 fin_Dispersion = time_factor  * sigma_analytical_Dispersion;
 if (TOD < 0)
-	begin_TOD = -3* time_factor * PulseWidth_analytical_TOD;
-	fin_TOD = 3* time_factor  * sigma_analytical_Dispersion;
+	begin_TOD = -0.75* time_factor * sigma_analytical_TOD;
+	fin_TOD = 1.5* time_factor  * sigma_analytical_Dispersion;
 elseif (TOD > 0)
-	begin_TOD = -3* time_factor * sigma_analytical_Dispersion;
-	fin_TOD = 3* time_factor * PulseWidth_analytical_TOD;
+	begin_TOD = -1.5* time_factor * sigma_analytical_Dispersion;
+	fin_TOD = 0.75* time_factor * sigma_analytical_TOD;
 else
 	begin_TOD = 0;
 	fin_TOD =0;
@@ -55,11 +56,11 @@ CEP = CEP_value(i_CEP);
 E_field_tin = Amplitude * carrier .* exp(i*(omega ) .* t + i*CEP*pi/180);#The temporal profile of the incoming electric field.
 E_field_omegain = fft(E_field_tin);# Fast Fourier Transformation.
 frequencies = f - omega;
-fi_omega = change_time^2 * Dispersion /2 * frequencies.^2 + change_time^3 * TOD /6 * frequencies.^3 + change_time^4 * FOD/24 * frequencies.^4;# This is the fi(omega) spectral function. omega is the central angular frequency.
+fi_omega = change_time^2 * GDD /2 * frequencies.^2 + change_time^3 * TOD /6 * frequencies.^3 + change_time^4 * FOD/24 * frequencies.^4;# This is the fi(omega) spectral function. omega is the central angular frequency.
 E_field_omegaout = E_field_omegain .* exp(-i * fi_omega);#Form of electric field of the output pulse in frequency domain.
 E_field_tout = ifft(E_field_omegaout); #Temporal profile of the output pulse. 
 
-fileName_graph = sprintf('Graph_%gWcm_%dfs_%dCEP%dGDD_%dTOD_%dFOD.jpg',Intensity, PulseWidth, CEP, Dispersion, TOD, FOD);
+fileName_graph = sprintf('Graph_%gWcm_%dfs_%dCEP%dGDD_%dTOD_%dFOD.jpg',Intensity, PulseWidth, CEP, GDD, TOD, FOD);
 if (CEP == 0)
 fig = figure();
 plot(t/change_time, real(E_field_tout)*5.14220674763e2)
@@ -76,7 +77,7 @@ output_signal = [];
 output_signal(:,1) = t;
 output_signal(:,2) = real(E_field_tout);
 output_signal(:,3) = abs(E_field_tout);
-fileName = sprintf('waveForm_%gWcm_%dfs_%dCEP_%dGDD_%dTOD_%dFOD.txt',Intensity, PulseWidth, CEP, Dispersion, TOD, FOD);
+fileName = sprintf('waveForm_%gWcm_%dfs_%dCEP_%dGDD_%dTOD_%dFOD.txt',Intensity, PulseWidth, CEP, GDD, TOD, FOD);
 save("-ascii",fileName, "output_signal")
 end
 
@@ -92,13 +93,13 @@ carrier = sqrt(exp(-(t.*t)/twosigmasquare));
 E_field_tin = Amplitude * carrier .* exp(i*(omega ) .* t + i*0);
 E_field_omegain = fft(E_field_tin);
 frequencies = f - omega;
-fi_omega = change_time^2 * Dispersion /2 * frequencies.^2 + change_time^3 * TOD /6 * frequencies.^3 + change_time^4 * FOD/24 * frequencies.^4;
+fi_omega = change_time^2 * GDD /2 * frequencies.^2 + change_time^3 * TOD /6 * frequencies.^3 + change_time^4 * FOD/24 * frequencies.^4;
 E_field_omegaout = E_field_omegain .* exp(-i * fi_omega);
 E_field_tout = ifft(E_field_omegaout);
 
 
-fileName_wigner = sprintf('Wigner_%gWcm_%dfs_%dGDD_%dTOD_%dFOD.jpg',Intensity, PulseWidth, Dispersion, TOD, FOD);
-fileName_wigner_text = sprintf('Wigner_%gWcm_%dfs_%dGDD_%dTOD_%dFOD.txt',Intensity, PulseWidth, Dispersion, TOD, FOD);
+fileName_wigner = sprintf('Wigner_%gWcm_%dfs_%dGDD_%dTOD_%dFOD.jpg',Intensity, PulseWidth, GDD, TOD, FOD);
+fileName_wigner_text = sprintf('Wigner_%gWcm_%dfs_%dGDD_%dTOD_%dFOD.txt',Intensity, PulseWidth, GDD, TOD, FOD);
 fig = figure();
 W = wignervilledist(E_field_tout);
 W_mod = abs(W)/max(max((abs(W))));
