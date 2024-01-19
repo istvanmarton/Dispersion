@@ -27,10 +27,10 @@ The script generates four types of output files. The names of the files contain 
 # The CTMC_RKPD_SCR_OMP_CPP_GDD.cpp file
 The CTMC_RKPD_SCR_OMP_CPP_GDD.cpp is a code to simulate ionization processes induced with ultrashort laser pulses with the classical-trajectory Monte Carlo method. The code can be compiled with the
 
-$ g++ CTMC_RKPD_SCR_OMP_CPP_GDD.cpp -fopenmp -o CTMC_RKPD_SCR_OMP_CPP_GDD -lgsl -lgslcblas -lm
+g++ CTMC_RKPD_SCR_OMP_CPP_GDD.cpp -fopenmp -o CTMC_RKPD_SCR_OMP_CPP_GDD -lgsl -lgslcblas -lm
 
 command and can be invoked with the
 
-$ ./CTMC_RKPD_SCR_OMP_CPP_GDD Number_of_threads
+./CTMC_RKPD_SCR_OMP_CPP_GDD Number_of_threads
 
 where 'Number_of_threads' is the number of threads the program can use during the execution.
