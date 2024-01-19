@@ -25,7 +25,7 @@ The script generates four types of output files. The names of the files contain 
 4. The names of .jpg files showing the Wigner function of the ultrashort laser pulse have the following form: 'Wigner_1e+15Wcm_7fs_0GDD_0TOD_500FOD.jpg'. The file name contains the properties of the pulse it depicts, and the number of .jpg files containing the Wigner distributions is equal to the number of dispersion values in the 'value' vector.
 
 # The CTMC_RKPD_SCR_OMP_CPP_GDD.cpp file
-The CTMC_RKPD_SCR_OMP_CPP_GDD.cpp is a code to simulate ionization processes induced with ultrashort laser pulses with the classical-trajectory Monte Carlo method. The code can be compiled with the
+The CTMC_RKPD_SCR_OMP_CPP_GDD.cpp is a code to simulate ionization processes induced with ultrashort laser pulses with the classical-trajectory Monte Carlo method. The code uses GNU Scientific Library, and OpenMP, and therefore is capable of exploiting the advantage of Shared Memory Parallelism. The code can be compiled with the
 
      g++ CTMC_RKPD_SCR_OMP_CPP_GDD.cpp -fopenmp -o CTMC_RKPD_SCR_OMP_CPP_GDD -lgsl -lgslcblas -lm
 
