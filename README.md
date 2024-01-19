@@ -25,7 +25,10 @@ The script generates four types of output files. The names of the files contain 
 4. The names of .jpg files showing the Wigner function of the ultrashort laser pulse have the following form: 'Wigner_1e+15Wcm_7fs_0GDD_0TOD_500FOD.jpg'. The file name contains the properties of the pulse it depicts, and the number of .jpg files containing the Wigner distributions is equal to the number of dispersion values in the 'value' vector.
 
 # The CTMC_RKPD_SCR_OMP_CPP_GDD.cpp file
-The CTMC_RKPD_SCR_OMP_CPP_GDD.cpp is a code to simulate ionization processes induced with ultrashort laser pulses with the classical-trajectory Monte Carlo method. The code uses GNU Scientific Library, and OpenMP, and therefore is capable of exploiting the advantage of Shared Memory Parallelism. The code can be compiled with the
+The CTMC_RKPD_SCR_OMP_CPP_GDD.cpp is a code to simulate the ionization processes of atoms induced with ultrashort laser pulses with the classical-trajectory Monte Carlo method. The code uses GNU Scientific Library, and OpenMP, and therefore is capable of exploiting the advantage of Shared Memory Parallelism. 
+## Basic usage
+The variable 'z_target' in the main function stands for the atomic number of the atom or ion. The variable 'N_electron' in the main function stands for the number of electrons in the atom or ion. The variable 'Num' in the main function stands for the number of trajectories the program is calculating for a given ultrafast pulse. The code requires waveForm file(s) that are the output of the Waveform.m script. The CTMC program reads in the waveform(s) of the ultrafast laser pulse given by the waveform files and executes the simulation. Every time the program is finished with a simulation, it renames the file 'waveForm_...' to 'awaveForm_...'. As the program reads in every file starting with 'waveForm_', one not should place files in the working folder with that name, unless it stands for an ultrashort pulse discussed previously.
+The code can be compiled with the
 
      g++ CTMC_RKPD_SCR_OMP_CPP_GDD.cpp -fopenmp -o CTMC_RKPD_SCR_OMP_CPP_GDD -lgsl -lgslcblas -lm
 
