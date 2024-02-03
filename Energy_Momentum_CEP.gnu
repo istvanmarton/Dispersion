@@ -81,7 +81,7 @@ set xlabel "Time (fs)" font s_p1 offset xlabel_offset_x, xlabel_offset_y+5
 set ylabel "Electric field (10^{10} V/m)" font s_p1 offset ylabel_offset_x+12.5, ylabel_offset_y
 set xtics(-20, -10, 0, 10, 20)
 set label "(c)" at screen 0.16,0.56 tc rgb "black" font p0 front
-plot [-600/fs_to_Hartree:600/fs_to_Hartree][-8:8] "awaveForm_6.5e+14Wcm_7fs_0CEP_0GDD_0TOD_0FOD.txt" u ($1/Hartree_to_time):(Hartree_to_10GV*$2) w l lw line_width lc rgb "red" lt 1 title "0", "awaveForm_6.5e+14Wcm_7fs_90CEP_0GDD_0TOD_0FOD.txt" u ($1/Hartree_to_time):(Hartree_to_10GV*$2) with line lw line_width/2 lc rgb "blue" lt 1 title "{Bold:/Symbol p/2}"
+plot [-600/fs_to_Hartree:600/fs_to_Hartree][-8:8] "awaveForm_6.5e+14Wcm_7fs_0CEP_0GDD_0TOD_0FOD.txt" u ($1/fs_to_Hartree):(Hartree_to_10GV*$2) w l lw line_width lc rgb "red" lt 1 title "0", "awaveForm_6.5e+14Wcm_7fs_90CEP_0GDD_0TOD_0FOD.txt" u ($1/fs_to_Hartree):(Hartree_to_10GV*$2) with line lw line_width/2 lc rgb "blue" lt 1 title "{Bold:/Symbol p/2}"
 
 unset multiplot
 set out
