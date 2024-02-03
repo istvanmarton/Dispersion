@@ -1,4 +1,3 @@
-//g++ CTMC_RKPD_SCR_OMP_CPP.cpp -fopenmp -o CTMC_RKPD_SCR_OMP_CPP
 //g++ CTMC_RKPD_SCR_OMP_CPP_GDD.cpp -fopenmp -o CTMC_RKPD_SCR_OMP_CPP_GDD -lgsl -lgslcblas -lm
 #include<omp.h>
 #include<dirent.h>
@@ -7,8 +6,7 @@
 #include<new>
 #include<cstring>
 #include<string>
-//gcc -o pr_d1 pr_d1.c -lgsl -lgslcblas -lm
-//gcc -fopenmp CTMC_RKPD_SCR_CL.c -o CTMC_RKPD_SCR_CL -lm
+
 #include<cstdio>
 #include<cmath>
 #include<cstdlib>
@@ -96,13 +94,12 @@ typedef struct data {
 
 class IonisationStatistics{
     public:
-            int excitation, ionization, double_ionization, anomal_Ete_Epe, anomal_dt;
+            int excitation, ionization, anomal_Ete_Epe, anomal_dt;
             std::vector<std::vector<long double>> ionisedElectron;
 
     void initialize(){
             excitation = 0;
             ionization = 0;
-            double_ionization=0;
             anomal_Ete_Epe = 0;
             anomal_dt = 0;
             ionisedElectron.clear();
@@ -632,7 +629,6 @@ long double time_of_ionization;
 		
                 IonisationStatist->excitation += local_IonisationStatist.excitation;
                 IonisationStatist->ionization += local_IonisationStatist.ionization;
-                IonisationStatist->double_ionization += local_IonisationStatist.double_ionization;
                 IonisationStatist->anomal_Ete_Epe += local_IonisationStatist.anomal_Ete_Epe;
                 IonisationStatist->anomal_dt += local_IonisationStatist.anomal_dt;
 
@@ -657,7 +653,6 @@ void StatisticsKiir(DATA* parameters, IonisationStatistics* IonisationStatist){
                 myfile << "#Binding energy: " << parameters->dBindingEnergy << " (" << parameters->dBindingEnergy*2*dBinding_energy_of_elements[0][0] << " eV)" <<", kszi: " << parameters->kszi << ", eta: " << parameters->eta << ", kszi0: " << parameters->kszi0 << ", kszi1: " << parameters->kszi1 << ", eta0: " << parameters->eta0 << ", eta1: " << parameters->eta1 << '\n';
                 myfile << "#excitation: " << IonisationStatist->excitation << '\n';
                 myfile << "#ionisation: " << IonisationStatist->ionization << '\n';
-                myfile << "#double ionisation: " << IonisationStatist->double_ionization << '\n';
                 myfile << "#anomal_Ete: " << IonisationStatist->anomal_Ete_Epe << '\n';
                 myfile << "#anomal_dt: " << IonisationStatist->anomal_dt << '\n';
                 myfile << "# ex\tey\tez\tvx\tvy\tvz\tpx\tpy\tpz\tEtotal\tEkin\tEpot\ttime_of_ionization\n";
