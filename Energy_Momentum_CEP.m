@@ -26,7 +26,7 @@ for ind=1:length(value)
     A=[];
 	fileName=[""];
 	fileName = sprintf('Statistics_%s_%gWcm_%gfs_%gCEP_%gGDD_%gTOD_%gFOD_1e-06epsilon.txt',element, Intensity, PulseWidth, CEP, GDD, TOD, FOD);
-	A = dlmread(deblank(fileName), '\t', 10, 0);
+	A = dlmread(deblank(fileName), '\t', 9, 0);
 
     totalsum(ind) = size(A)(1);
     B{ind} = A;
