@@ -41,7 +41,7 @@ set y2label "Electric field (10^{10} V/m)" font p1 tc "blue" offset y2label_offs
 set ytics offset ytics_offset_x, ytics_offset_y tc "red"
 set xtics offset xtics_offset_x, xtics_offset_y
 set y2tics tc "blue" offset y2tics_offset_x, y2tics_offset_y
-p [-15:15] f(x) lc rgb "black" linewidth 7 dt 2, 'trajectory.txt' u ($1/change_t):(change_E*$2) every 1 w l axis x1y1 lc rgb "red" linewidth 7 title "", 'awaveForm_6.5e+14Wcm_7fs_0CEP_0GDD_0TOD_0FOD_FOD.txt' u ($1/change_t):(change*$2) w l lc rgb "blue" linewidth 9 title "" axis x1y2  #, 'trajectory2.txt' u ($1/change_t):(change_E*$7) every 1 w l axis x1y1 lc rgb "black" linewidth 7 title ""
+p [-15:15] f(x) lc rgb "black" linewidth 7 dt 2, 'Electron_Energy.txt' u ($1/change_t):(change_E*$2) every 1 w l axis x1y1 lc rgb "red" linewidth 7 title "", 'awaveForm_6.5e+14Wcm_7fs_0CEP_0GDD_0TOD_0FOD_FOD.txt' u ($1/change_t):(change*$2) w l lc rgb "blue" linewidth 9 title "" axis x1y2  #, 'trajectory2.txt' u ($1/change_t):(change_E*$7) every 1 w l axis x1y1 lc rgb "black" linewidth 7 title ""
 
 unset label
 unset key
