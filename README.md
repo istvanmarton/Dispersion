@@ -68,8 +68,11 @@ The 'Electron_Energy.gnu' Gnuplot script is written to output 'Electron_Energy.e
    4. //fclose(fp);
 
 The line in the function 'Statistics'
+
 if(E_Te<0) { (local_IonisationStatist->excitation)++; (*k)++; }
+
 should be modified to
+
 if(E_Te<0) { (local_IonisationStatist->excitation)++; /*(*k)++;*/ }
 
 After compilation only one core should be used with the following command:
