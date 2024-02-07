@@ -363,7 +363,7 @@ void collision_process(DATA* parameters, long double* y_t, int *validity, long d
 	bool bCondition = true;
         parameters->iValue = 6;
 
-//       FILE *fp;
+//	FILE *fp;
 //	fp=fopen("trajectory.txt","w");
 
 for(i=0; bCondition; i++){
@@ -427,7 +427,7 @@ for(i=0; bCondition; i++){
 			*time_of_ionization = -b/m; 
 			ionizationCheck = 1;
 		}
-		//fprintf(fp,"%Lf\t%Lf\n",t, E_kin+E_pot); 
+//		fprintf(fp,"%Lf\t%Lf\n",t, E_kin+E_pot); 
 
 		delta = pow((epsilon/R_max/2), 0.2);
         }
@@ -808,11 +808,11 @@ int main(int argc, char* argv[]){
         int thread_count;
         num_of_Threads(&argc, &thread_count, argv);
 
-        int Num = 1200000, iCount, iRemainder;
+        int Num = 320, iCount, iRemainder;
         iCount = Num/thread_count;
         iRemainder = Num%thread_count;
 	char waveFormFilename[2048];
-        int z_electron = -1, z_target = 11, N_electron = 11;
+        int z_electron = -1, z_target = 1, N_electron = 1;
         long double m_electron = 1;
 	int m_target_int = 1836 * dMass_of_elements[z_target];
 	long double m_target = m_target_int;
