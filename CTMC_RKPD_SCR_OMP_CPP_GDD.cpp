@@ -15,10 +15,6 @@
 #include<gsl/gsl_errno.h>
 #include<gsl/gsl_spline.h>
 #include<gsl/gsl_math.h>
-//#include<gsl_rng.h>
-//#include <gsl/gsl_errno.h>
-//#include <gsl/gsl_matrix.h>
-//#include <gsl/gsl_odeiv2.h>
 #include<vector>
 #include<fstream>
 #define M_PI 3.14159265358979323846
@@ -88,8 +84,6 @@ typedef struct data {
                 double *waveForm_t, *waveForm_A, c, dEnd;
 				double ldIntensity, ldPulseWidth, ldGDD, ldTOD, ldFOD, ldCEP, dt;
                 std::string additionalInfo, additionalInfo1;
-//		long double denominator;
-
 } DATA;
 
 class IonisationStatistics{
@@ -103,7 +97,6 @@ class IonisationStatistics{
             anomal_Ete_Epe = 0;
             anomal_dt = 0;
             ionisedElectron.clear();
- //           std::cout << "constructor\n";
             }
 
             IonisationStatistics(){
@@ -150,16 +143,9 @@ long double FACT(long double r, DATA* parameters){
     if(parameters->iN_electron == 1) {fscr=parameters->iz_target; fscr_comma = 0; }
     else if(std::isinf(exponential = exp(parameters->kszi*r))) {fscr=parameters->iz_target-(parameters->iN_electron-1); fscr_comma = 0; }
     else if(std::isinf(denominator = (exponential-1)*(parameters->eta)/(parameters->kszi)+1)) {fscr=parameters->iz_target-(parameters->iN_electron-1); fscr_comma = 0; }
-//    else if(std::isinf(denominatorSquare = pow(denominator,2))) {fscr_comma = 0; }
     else {fscr=parameters->iz_target-(parameters->iN_electron-1)*(1-1/denominator); fscr_comma=parameters->eta*(1-parameters->iN_electron)/denominator*exponential/denominator; }
-//printf("fscr_comma is wrong, distance is: %Lf\n", fscr_comma);
 if(!std::isnormal(fscr) && (fscr != 0)) {printf("fscr is wrong, distance: %Lf, exponential: %Lf, denominator: %Lf, fscr_comma: %Lf\n", r, exponential, denominator, fscr); }
 if(!std::isnormal(fscr_comma) && (fscr_comma != 0)) {printf("fscr_comma is wrong, distance: %Lf, exponential: %Lf, denominator: %Lf, fscr_comma: %Lf\n", r, exponential, denominator, fscr_comma); }
-//    fscr_comma = 0;
-/*FILE *fp;
-fp=fopen("FACT.txt","a");
-fprintf(fp,"%Lf\t%Lf\t%Lf\n",r, fscr, fscr_comma);
-fclose(fp);*/
 	factResult=fscr/r-fscr_comma;
     return factResult;
     }
@@ -171,21 +157,11 @@ long double potential_fscr(long double r, DATA* parameters){
     else if(std::isinf(exponential = exp(parameters->kszi*r))) {fscr=parameters->iz_target-(parameters->iN_electron-1); }
     else if(std::isinf(denominator=(exponential-1)*(parameters->eta)/(parameters->kszi)+1)) {fscr=parameters->iz_target-(parameters->iN_electron-1); }
     else{fscr=parameters->iz_target-(parameters->iN_electron-1)*(1-1/denominator); }
-//		printf("kszi: %Lf, eta: %Lf, kszi0: %Lf, kszi1: %Lf, eta0: %Lf, eta1: %Lf, denominator: %Lf, %d\n", kszi, eta, kszi0, kszi1, eta0, eta1, denominator, iIndex);
-//printf("%Lf\n", fscr);
 if(!std::isnormal(fscr) && (fscr != 0)) {printf("fscr is wrong, distance: %Lf\n", r); }
-//        fscr=1;
-/*FILE *fp;
-fp=fopen("potential_fscr.txt","a");
-fprintf(fp,"%Lf\t%Lf\n",r, fscr);
-fclose(fp);*/
         return fscr;
 }
 
 long double potential(long double r, DATA* parameters){
-/*	int N=z_target-ionisation_of_proton; //Number of electrons in target atom.
-	long double kszi=kszi0+kszi1*(z_target-N), eta=eta0+eta1*(z_target-N);
-	long double fscr=z_target-(N-1)*(1-1/((exp(kszi*r)-1)*eta/kszi+1));*/
 	long double potentialEnergy;
 	potentialEnergy=parameters->iz_electron*potential_fscr(r, parameters)/r;
 return potentialEnergy;
@@ -201,20 +177,13 @@ void table(DATA* parameters){
     parameters->OmegaR[0]=0;
     parameters->r[0]=0;
     parameters->Fuggveny[0]=0;
-
-/*                  for(i=0; i<meretrDistribution; i++){
-
-                           energyDistribution[i]= sqrt(2*(BindingEnergy-1/potential((i+0.5)*drDistribution))/RedukaltTomeg);
-                  }*/
 	              for(i = 1 ; i < parameters->meret ; i++ ){
                           parameters->r[i]=i*parameters->dr;
 		                  parameters->Fuggveny[i]=parameters->RedukaltTomeg*pow(parameters->r[i],2)*sqrt(2*parameters->RedukaltTomeg*BindingEnergy_minus_potential(parameters->r[i], parameters));
 		                  parameters->OmegaR[i]=parameters->OmegaR[i-1]+(parameters->Fuggveny[i-1]+parameters->Fuggveny[i])*parameters->dr/2;
-//		                  printf("%Lf\t%Lf\n",r[i],OmegaR[i]);
                   }
                   parameters->OmegaRmax=parameters->OmegaR[parameters->meret-1];
 
-//printf("%Lf\n",OmegaR[2]);
 	if(parameters->r[parameters->meret-1] != parameters->rMax) {
 		printf("r[meret-1] not equal to rMax");
 		getchar();
@@ -266,11 +235,9 @@ void calc_radius_from_randnum(DATA* parameters, long double* y, long double Rand
                                        /*if(OmegaR[kozep]<=RandNum)*/ else i=kozep;
                                        kozep=(i+j+1)/2;
                                 }
-//		 printf("%d\t%d\t%Lf\t%Lf\t%Lf\n",kozep, kozep+1, OmegaR[kozep], RandNum, OmegaR[kozep+1]);  
               m=(parameters->r[kozep+1]-parameters->r[kozep])/(parameters->OmegaR[kozep+1]-parameters->OmegaR[kozep]);
               b=parameters->r[kozep]-m*parameters->OmegaR[kozep];
               *y=m*RandNum+b;
-//	printf("%Lf\t%Lf\t%Lf\n", OmegaR[kozep], RandNum_calc, OmegaR[kozep+1]);
 }
 
 void initial_Conditions(DATA* parameters, long double* y_t,  long double* y){
@@ -284,14 +251,8 @@ int energyIndex;
         RandNum_Fi_v=(long double) 2*M_PI*rand()/RAND_MAX;
 
         r_tenyezo=sqrt(1-RandNum_Nu_r*RandNum_Nu_r);
-        //Ax_t0=y*r_tenyezo*cos(RandNum_Fi_r);
-        //Ay_t0=y*r_tenyezo*sin(RandNum_Fi_r);
-        //Az_t0=y*RandNum_Nu_r;
 
         v_tenyezo=sqrt(1-RandNum_Nu_v*RandNum_Nu_v);
-        //v_Ax_t0=Velocity*v_tenyezo*cos(RandNum_Fi_v);
-        //v_Ay_t0=Velocity*v_tenyezo*sin(RandNum_Fi_v);
-        //v_Az_t0=Velocity*RandNum_Nu_v;
 
         calc_radius_from_randnum(parameters, y, RandNum);
 
@@ -318,11 +279,7 @@ void calc_eccentricity(DATA* parameters, long double* eccentricity, long double*
         l_momentum=pow(l[0],2)+pow(l[1],2)+pow(l[2],2);
 	*xx=1+2*(parameters->dBindingEnergy)*l_momentum/(parameters->RedukaltTomeg*pow(parameters->iz_electron*parameters->iz_target,2));
 	*eccentricity=sqrt(*xx);
-//        printf("eccentricity: %Lf\n", *eccentricity);
-
 }
-
-//long double EGlobal[2];
 
 void Lorentz_simple_calc(DATA* parameters, long double* t_ld, long double* y_t, long double* dEplusvxB, long double* dEplusvxB_electron, gsl_interp_accel *acc, gsl_spline *spline){
 
@@ -340,7 +297,6 @@ void Lorentz_simple_calc(DATA* parameters, long double* t_ld, long double* y_t, 
 		dElectric[2] = 0;
 	}
 
-//	dElectric[2] = 0;
 	dElectric_electron[0] = 0;
 	dElectric_electron[1] = 0;
 	if( (t_electron < parameters->waveForm_t[parameters->waveForm_size-1]) && (t_electron > parameters->waveForm_t[0])){
@@ -349,9 +305,7 @@ void Lorentz_simple_calc(DATA* parameters, long double* t_ld, long double* y_t, 
 	else{
 		dElectric_electron[2] = 0;
 	}
-//printf("Itt meg jo.\n");
-//	dElectric_electron[2] = 0;
-//	printf("%Lf\t%lf\t%lf\n", y_t[electron_x], t_electron, dElectric_electron[2]);
+
 	dB[0]=0;
     dB[1]=dElectric[2]/parameters->c;
     dB[2]=dElectric[1]/parameters->c;
@@ -359,10 +313,6 @@ void Lorentz_simple_calc(DATA* parameters, long double* t_ld, long double* y_t, 
     dB_electron[0]=0;
     dB_electron[1]=dElectric_electron[2]/parameters->c;
     dB_electron[2]=dElectric_electron[1]/parameters->c;
-//	EGlobal[0]=dElectric[2];
-//	EGlobal[1]=dElectric_electron[2];
-//printf("%Lf\n",*dElectric_field);
-//    crossProduct<long double>( &y_t[electron_vx], dB_electron, vxB_electron);
 
     dEplusvxB[0] = dElectric[0]; //+ y_t[1]*dB[2]-y_t[2]*dB[1];
     dEplusvxB[1] = dElectric[1]; // + y_t[2]*dB[0]-y_t[0]*dB[2];
@@ -377,7 +327,6 @@ void coefficients_simple(DATA* parameters, long double y_t[], long double* t_giv
 long double ycalc_t[parameters->iSize], F_A, A, FACTAA, squareA, cubicA;
 long double dEplusvxB[3], dEplusvxB_electron[3];
 
-//std::cout << dElectric_field << '\t' << dElectric_field_electron << std::endl;
         ycalc_t[electron_x]=y_t[electron_x]+k_giv[electron_x];
         ycalc_t[electron_y]=y_t[electron_y]+k_giv[electron_y];
         ycalc_t[electron_z]=y_t[electron_z]+k_giv[electron_z];
@@ -388,16 +337,11 @@ long double dEplusvxB[3], dEplusvxB_electron[3];
         Lorentz_simple_calc(parameters, t_giv, ycalc_t , dEplusvxB, dEplusvxB_electron, acc, spline);
 
         squareA = dotProduct_simple(&ycalc_t[electron_x]); //pow(ycalc_t[electron_x],2) + pow(ycalc_t[1],2) + pow(ycalc_t[2],2);
-//printf("%Lf, %Lf, %Lf, %Lf, %Lf, %Lf\n", y_t[0], y_t[1], y_t[2], y_t[3], y_t[4], y_t[5]);
-//printf("%Lf, %Lf, %Lf, %Lf, %Lf, %Lf\n", ycalc_t[0], ycalc_t[1], ycalc_t[2], ycalc_t[3], ycalc_t[4], ycalc_t[5]);
 	A=sqrt(squareA);
 
 	FACTAA=FACT(A, parameters); //potential_fscr(A, parameters)/A-potential_fscr_comma(A, parameters);
 
-//	F_A=(1/parameters->dm_electron + 1/parameters->dm_target)*parameters->iz_electron/squareA*FACTAA;
 	F_A=parameters->dTwoBody_Mass_Prefactor*parameters->iz_electron/squareA*FACTAA;
-	
-//	F_A=parameters->iz_electron/squareA*FACTAA/parameters->RedukaltTomeg;
 
         k_calc[electron_x]=ycalc_t[electron_vx]*dt;
         k_calc[electron_y]=ycalc_t[electron_vy]*dt;
@@ -406,51 +350,28 @@ long double dEplusvxB[3], dEplusvxB_electron[3];
         k_calc[electron_vx]=(F_A*ycalc_t[electron_x]+parameters->dElectron_prefactor*dEplusvxB_electron[0]-parameters->dTarget_prefactor*dEplusvxB[0])*dt;
         k_calc[electron_vy]=(F_A*ycalc_t[electron_y]+parameters->dElectron_prefactor*dEplusvxB_electron[1]-parameters->dTarget_prefactor*dEplusvxB[1])*dt;
         k_calc[electron_vz]=(F_A*ycalc_t[electron_z]+parameters->dElectron_prefactor*dEplusvxB_electron[2]-parameters->dTarget_prefactor*dEplusvxB[2])*dt;
-//    k_calc[4]=(F_A*ycalc_t[5]+1/parameters->dm_electron*parameters->iz_electron*dElectric_field-(parameters->iz_target-parameters->iN_electron+1)/parameters->dm_target*dElectric_field)*dt;
-//printf("%Lf\t%Lf\t%Lf\n", A, potential_fscr_comma(A, parameters), FACTAA);
 }
 
 void collision_process(DATA* parameters, long double* y_t, int *validity, long double* time_of_ionization, gsl_interp_accel *acc, gsl_spline *spline/*, int *k*/){
         const long double dt_original = 1e-6;
-		long double t = parameters->waveForm_t[0];
+	long double t = parameters->waveForm_t[0];
         long double t_in, time_of_ionization_prev, E_all_prev, m, b;
-        long double k_in[parameters->iSize], k1[parameters->iSize], k2[parameters->iSize], k3[parameters->iSize], k4[parameters->iSize], k5[parameters->iSize], k6[parameters->iSize], k7[parameters->iSize], zk[parameters->iSize], fk[parameters->iSize]/*, s[iValue]*/, epsilon=parameters->dt;
-//		printf("epsilon: %.9Lf\n", epsilon);
+        long double k_in[parameters->iSize], k1[parameters->iSize], k2[parameters->iSize], k3[parameters->iSize], k4[parameters->iSize], k5[parameters->iSize], k6[parameters->iSize], k7[parameters->iSize], zk[parameters->iSize], fk[parameters->iSize], epsilon=parameters->dt;
         long double dt=dt_original, R_max, delta, R[parameters->iSize];
-		long double E_kin, E_pot, E_All;
+	long double E_kin, E_pot, E_All;
         int i, j, errorCounter = 0, errorMax = 1 * (parameters->waveForm_t[parameters->waveForm_size] - parameters->waveForm_t[0]), ionizationCheck = 0;
-		bool bCondition = true;
-//        printf("%Lf\n",dt);
+	bool bCondition = true;
+        parameters->iValue = 6;
 
-                        parameters->iValue = 6;
-		
-//        FILE *Electric;
-
-//        Electric = fopen(parameters->additionalInfo1.c_str(),"w");
-//Electric = fopen("Electric.txt","w");
 //       FILE *fp;
-//	*y=0.05;
-//	*Velocity=sqrt(2*(*BindingEnergy+1/(*y)/RedukaltTomeg));
-//	printf("m_target: %Lf\tm_electron: %Lf\tm_projectile: %Lf\n",m_target, m_electron ,m_projectile);
-//                fp=fopen("trajectory.txt","w");
-
-//	if(RandNum_Nu_r==1 || RandNum_Nu_v==1 || RandNum_Nu_r==-1 || RandNum_Nu_v==-1) {
-//		printf("%Lf\t%Lf\t%Lf\t%Lf\n",RandNum_Nu_r, RandNum_Nu_v, RandNum_Fi_r, RandNum_Fi_v);
-//	 exit(1);}
-
-//	printf("%Lf\t%Lf\n",Period, *y);
-
-//for(j=0; j<iValue; j++){ printf("%Lf\t", y_t[j]);}
-//printf("\n%Lf\n",E_kin+E_pot);
-//printf("%Lf\n",eccentricity);
-//	if(eccentricity>0.9999) flag=1;
+//	fp=fopen("trajectory.txt","w");
 
 for(i=0; bCondition; i++){
-//std::cout << '\n';
+
 	t_in = t;
 	for(j=0; j<parameters->iValue; j++) { k_in[j]=0; }
 	coefficients_simple(parameters, y_t, &t_in, k_in, k1, dt, acc, spline);
-//                fprintf(Electric,"%Lf\t%.12Lf\t%.12Lf\n",t, EGlobal[0], EGlobal[1]);
+
 	t_in = t+dt/5;
 	for(j=0; j<parameters->iValue; j++) { k_in[j]=k1[j]/5; }
 	coefficients_simple(parameters, y_t, &t_in, k_in, k2, dt, acc, spline);
@@ -473,20 +394,13 @@ for(i=0; bCondition; i++){
 
         for(j=0; j<parameters->iValue; j++) { k_in[j]=35*k1[j]/384+500*k3[j]/1113+125*k4[j]/192-2187*k5[j]/6784+11*k6[j]/84; }
 	coefficients_simple(parameters, y_t, &t_in, k_in, k7, dt, acc, spline);
-//printf("%.10lf\t%.10lf\t%.10lf\n", y_t[0], k_in[0], k7[0]);
-	for(j=0; j<parameters->iValue; j++) {
-//printf("%Lf,%Lf,%Lf,%Lf,%Lf,%Lf,%Lf\n", k1[j], k2[j], k3[j], k4[j], k5[j], k6[j], k7[j]);
-		zk[j]=y_t[j]+5179*k1[j]/57600+7571*k3[j]/16695+393*k4[j]/640-92097*k5[j]/339200+187*k6[j]/2100+k7[j]/40;
-//		fk[j]=y_t[j]+35*k1[j]/384+500*k3[j]/1113+125*k4[j]/192-2187*k5[j]/6784+11*k6[j]/84;
-		fk[j]=y_t[j]+k_in[j];
 
+	for(j=0; j<parameters->iValue; j++) {
+
+		zk[j]=y_t[j]+5179*k1[j]/57600+7571*k3[j]/16695+393*k4[j]/640-92097*k5[j]/339200+187*k6[j]/2100+k7[j]/40;
+		fk[j]=y_t[j]+k_in[j];
 		R[j]=fabs(fk[j]-zk[j])/dt;
-//                printf("%.10lf\t%.10lf\t%.10lf\n", zk[j], fk[j], R[j]);
-//printf("fk: %Lf\tzk: %Lf\t%Lf\n", fk[j], zk[j], dt);
-//                if( R[j] == 0 ) {delta[j] = 2; (*k)++; }
-   //             if (delta[j] > 10) {delta[j] = 10;}
-//                printf("%Lf,%Lf,%Lf,%Lf,%Lf,%Lf,%Lf\n", k1[j], k2[j], k3[j], k4[j], k5[j], k6[j], k7[j]);
- //               printf("%.20lf\t%.20lf\t%.20lf\t%.20lf\t%.20lf\n",fk[j], zk[j], delta[j], R[j], dt);
+		
 		}
 		
 		R_max = 0;
@@ -498,131 +412,103 @@ for(i=0; bCondition; i++){
 		time_of_ionization_prev = t;
 		E_all_prev = E_All;
 		t+=dt;
-			for(j=0; j<parameters->iValue; j++){
-				y_t[j]=fk[j];
-			}		
-/*if((i%100) == 0)*/ //printf("%Lf\t%Lf\n", t, dt);
-						  E_kin=0.5*parameters->RedukaltTomeg*(pow(y_t[electron_vx],2) + pow(y_t[electron_vy],2) + pow(y_t[electron_vz],2));
-                          E_pot=potential(sqrt(pow(y_t[electron_x],2) + pow(y_t[electron_y],2) + pow(y_t[electron_z],2)), parameters);
-						E_All = E_kin + E_pot;
-						bCondition = (t < parameters->waveForm_t[parameters->waveForm_size-1]) || ( (E_All >= 0) && (t < parameters->dEnd) && ((-E_kin/E_pot) < 5e4) ); /*(t < parameters->waveForm_t[parameters->waveForm_size-1] + 41341000)*/
-						if((E_All >= 0) && (ionizationCheck == 0)) {
-							m = (E_All - E_all_prev)/(t - time_of_ionization_prev);
-							b = E_all_prev - m * time_of_ionization_prev;
-							*time_of_ionization = -b/m; 
-							ionizationCheck = 1;
-						}
-			//                          fprintf(fp,"%Lf\t%Lf\t%Lf\t%Lf\t%Lf\t%Lf\t%Lf\n",t, y_t[0], y_t[1], y_t[2], E_kin, E_pot, E_kin+E_pot); 
-            //E_Te=0.5*(m_electron*m_target/(m_electron+m_target))*(pow(y_t[0],2) + pow(y_t[2],2) + pow(y_t[4],2))+z_electron*potential_fscr(AA)/(AA);
-//                        fprintf(fp,"%Lf\t%Lf\t%Lf\t%Lf\t%Lf\t%Lf\t%Lf\n",t, y_t[1], y_t[3], y_t[5], E_kin, E_pot, E_kin+E_pot); /*E_Te=0.5*(m_electron*m_target/(m_electron+m_target))*(pow(y_t[0],2) + pow(y_t[2],2) + pow(y_t[4],2))+z_electron*potential_fscr(AA)/(AA);*/
-         //               fprintf(fp,"%Lf\t%Lf\t%Lf\t%Lf\t%Lf\t%Lf\t%Lf\n",t, y_t[1], y_t[3], y_t[5]/*, y_t[7], y_t[9], y_t[11]*/, E_kin, E_pot, E_kin+E_pot);
+		
+		for(j=0; j<parameters->iValue; j++){
+			y_t[j]=fk[j];
+		}
+
+		E_kin=0.5*parameters->RedukaltTomeg*(pow(y_t[electron_vx],2) + pow(y_t[electron_vy],2) + pow(y_t[electron_vz],2));
+                E_pot=potential(sqrt(pow(y_t[electron_x],2) + pow(y_t[electron_y],2) + pow(y_t[electron_z],2)), parameters);
+		E_All = E_kin + E_pot;
+		bCondition = (t < parameters->waveForm_t[parameters->waveForm_size-1]) || ( (E_All >= 0) && (t < parameters->dEnd) && ((-E_kin/E_pot) < 5e4) ); 
+		if((E_All >= 0) && (ionizationCheck == 0)) {
+			m = (E_All - E_all_prev)/(t - time_of_ionization_prev);
+			b = E_all_prev - m * time_of_ionization_prev;
+			*time_of_ionization = -b/m; 
+			ionizationCheck = 1;
+		}
+		//fprintf(fp,"%Lf\t%Lf\n",t, E_kin+E_pot); 
 
 		delta = pow((epsilon/R_max/2), 0.2);
-//	printf("%Lf\n",E_kin+E_pot);
         }
-    else {delta = pow((epsilon/R_max/2), 0.25); }
-//printf("%Lf\t%Lf\n",dt, delta_min);
+	else {delta = pow((epsilon/R_max/2), 0.25); }
 
- //       if( (std::isinf(delta_min)) /*|| (delta_min > 2)*/) {delta_min = 2; /*(*k)++;*/}
-//        if(delta_min < 0.5) {delta_min = 0.5; }
- //       printf("%.20lf\t%.20lf\n",delta_min, dt);
 	dt*=delta;
 if( !std::isnormal(dt) ) {dt = dt_original; errorCounter++; }
 
-//                printf("b %Lf, %Lf\n",dt, delta_min);
-        if(errorCounter > errorMax ) {*validity=0; /*std::cout << "Szamolas nem jo. %Lf \n" << dt;*/ goto end_of_function; /*dt=1e-8; flag=1;*/}
-	//	if(isnormal)
-//	printf("%Lf\t%Lf\t%Lf\n",t, dt, delta_min);
+        if(errorCounter > errorMax ) {*validity=0; goto end_of_function; }
+
 }
 *validity=1;
 end_of_function:;
-//        fclose(fp);
-//fclose(Electric);
-//	printf("Energy: %Lf\n", E_kin+E_pot);
+//fclose(fp);
 }
 
 void Statistics(DATA* parameters, IonisationStatistics* local_IonisationStatist ,long double* y_t, int validity, int Num, int* k, long double* time_of_ionization){
 int my_rank;
 long double E_Te, E_kin_Te, E_pot_Te, E_kin_Pe;
 std::vector<long double> electronData;
-//		 printf("%Lf\t%Lf\n",E_Te, E_Pe);
-                if(validity==0) {(local_IonisationStatist->anomal_dt)++; /*(*k)++;*/ }
-                 if(validity==1){
 
-        //	AA=sqrt(pow(y_t[1],2) + pow(y_t[3],2) + pow(y_t[5],2));
-
-                E_kin_Te = 0.5*parameters->RedukaltTomeg*dotProduct_simple(&y_t[electron_vx]);
-                E_pot_Te = potential(sqrt(dotProduct_simple(&y_t[electron_x])), parameters);
-                E_Te = E_kin_Te + E_pot_Te;
-
-                if((E_Te<0)/* && (E_Pe>0)*/) { (local_IonisationStatist->excitation)++; (*k)++; }
-                else if((E_Te>0)/* && (E_Pe>0)*/) {(local_IonisationStatist->ionization)++;
-                    electronData.push_back(y_t[electron_x]); 
-					electronData.push_back(y_t[electron_y]); 
-					electronData.push_back(y_t[electron_z]); 
-					electronData.push_back(y_t[electron_vx]); 
-					electronData.push_back(y_t[electron_vy]); 
-					electronData.push_back(y_t[electron_vz]); 
-					electronData.push_back(parameters->dm_electron * y_t[electron_vx]); 
-					electronData.push_back(parameters->dm_electron * y_t[electron_vy]); 
-					electronData.push_back(parameters->dm_electron * y_t[electron_vz]); 
-					electronData.push_back(E_Te);  
-					electronData.push_back(E_kin_Te); 
-					electronData.push_back(E_pot_Te);
-					electronData.push_back(*time_of_ionization);
-                    local_IonisationStatist->ionisedElectron.push_back(electronData); 
-					(*k)++; 
-					}
-      //          else if((E_Te>0)/* && (E_Pe<0) && (E_Pe>=parameters->dBindingEnergy_of_Projectile)*/) {electronCapt[Index]++; *crossSection_electronCapt+=factor*RandNum_b; (*k)++;}
-       //         else if((E_Te>0)/* && (E_Pe<0) && (E_Pe<parameters->dBindingEnergy_of_Projectile)*/) { electronCapt_butlessthan_bindingEnergy[Index]++; *crossSection_excitation+=factor*RandNum_b; (*k)++;/*printf("Electroncapture, but E_Pe is less than binding energy. E_Te: %Lf\tE_Pe: %Lf\n", E_Te, E_Pe);*/ }
-                else { (local_IonisationStatist->anomal_Ete_Epe)++; /*printf("E_Te: %Lf\tE_Pe: %Lf\n", E_Te, E_Pe);*/}
-                if(*k%250==0) {my_rank = omp_get_thread_num(); printf("Thread %d is ready of %d cycle is ready from %d.\n", my_rank, *k, Num); }
-                }
-      //           electronData.clear();
+if(validity==0) {(local_IonisationStatist->anomal_dt)++; /*(*k)++;*/ }
+if(validity==1){
+	E_kin_Te = 0.5*parameters->RedukaltTomeg*dotProduct_simple(&y_t[electron_vx]);
+	E_pot_Te = potential(sqrt(dotProduct_simple(&y_t[electron_x])), parameters);
+	E_Te = E_kin_Te + E_pot_Te;
+	if(E_Te<0) { (local_IonisationStatist->excitation)++; (*k)++; }
+        else if(E_Te>0) {(local_IonisationStatist->ionization)++;
+        	electronData.push_back(y_t[electron_x]); 
+		electronData.push_back(y_t[electron_y]); 
+		electronData.push_back(y_t[electron_z]); 
+		electronData.push_back(y_t[electron_vx]); 
+		electronData.push_back(y_t[electron_vy]); 
+		electronData.push_back(y_t[electron_vz]); 
+		electronData.push_back(parameters->dm_electron * y_t[electron_vx]); 
+		electronData.push_back(parameters->dm_electron * y_t[electron_vy]); 
+		electronData.push_back(parameters->dm_electron * y_t[electron_vz]); 
+		electronData.push_back(E_Te);  
+		electronData.push_back(E_kin_Te); 
+		electronData.push_back(E_pot_Te);
+		electronData.push_back(*time_of_ionization);
+		local_IonisationStatist->ionisedElectron.push_back(electronData); 
+		(*k)++; 
+	}
+	else { (local_IonisationStatist->anomal_Ete_Epe)++; }
+        if(*k%250==0) {my_rank = omp_get_thread_num(); printf("Thread %d is ready of %d cycle is ready from %d.\n", my_rank, *k, Num); }
+        }
 }
 
 void distribution(int iCount, int iRemainder, int thread_count, DATA* parameters, IonisationStatistics* IonisationStatist){
-		gsl_interp_accel *acc = gsl_interp_accel_alloc();
-		gsl_spline *spline = gsl_spline_alloc(gsl_interp_cspline, parameters->waveForm_size);
-		gsl_spline_init (spline, parameters->waveForm_t, parameters->waveForm_A, parameters->waveForm_size);
-	
-  int k, i, iNumjob_per_Thread ,validity;
-  long double y /*=sqrt(2*(BindingEnergy+1/rMax/RedukaltTomeg))*/;
+		
+	gsl_interp_accel *acc = gsl_interp_accel_alloc();
+	gsl_spline *spline = gsl_spline_alloc(gsl_interp_cspline, parameters->waveForm_size);
+	gsl_spline_init (spline, parameters->waveForm_t, parameters->waveForm_A, parameters->waveForm_size);
 
-if (omp_get_thread_num() < iRemainder) {iNumjob_per_Thread = iCount + 1;}
-else {iNumjob_per_Thread = iCount;}
+	int k, i, iNumjob_per_Thread ,validity;
+	long double y /*=sqrt(2*(BindingEnergy+1/rMax/RedukaltTomeg))*/;
 
-long double eccentricity, xx;
-long double y_t[parameters->iSize];
-class IonisationStatistics local_IonisationStatist;
-long double local_rDistribution[parameters->meretrDistribution], local_energyDistribution[parameters->meretrDistribution];
-long double time_of_ionization;
-//    initialize_to_zero<int>(parameters->size, 6, local_excitation, local_ionization, local_electronCapt, local_electronCapt_butlessthan_bindingEnergy, local_anomal_dt, local_anomal_Ete_Epe);
-    initialize_to_zero<long double>(parameters->meretrDistribution, 2, local_rDistribution, local_energyDistribution);
+	if (omp_get_thread_num() < iRemainder) {iNumjob_per_Thread = iCount + 1;}
+	else {iNumjob_per_Thread = iCount;}
 
-//for(l=0; l<size; l++){printf("%d\t%d\t%d\t%d\t%d\t%d\n",excitation[l], ionization[l], electronCapt[l], electronCapt_butlessthan_bindingEnergy[l], anomal_dt[l], anomal_Ete_Epe[l]);}
+	long double eccentricity, xx;
+	long double y_t[parameters->iSize];
+	class IonisationStatistics local_IonisationStatist;
+	long double local_rDistribution[parameters->meretrDistribution], local_energyDistribution[parameters->meretrDistribution];
+	long double time_of_ionization;
+	initialize_to_zero<long double>(parameters->meretrDistribution, 2, local_rDistribution, local_energyDistribution);
      
-     for(k=0; iNumjob_per_Thread > k; ){
-
-        initial_Conditions(parameters, y_t, &y);
-	calc_eccentricity(parameters, &eccentricity, &xx, y_t);
-     //  printf("%Lf\n", eccentricity);
-
-	if((y!=0) && (xx>=0) && (eccentricity < 0.999)) {
-
-                                  collision_process(parameters, y_t, &validity, &time_of_ionization, acc, spline/*, &k*/);
-                             //     std::cout << parameters->iValue << std::endl;
-                Statistics(parameters, &local_IonisationStatist ,y_t, validity, iNumjob_per_Thread, &k, &time_of_ionization);
-//		 printf("%Lf\n", y);
-
-        }
-
-//     ("%Lf\t%Lf\t%Lf\t%Lf\n",y, RandNum, OmegaR[i], OmegaR[j]);
+	for(k=0; iNumjob_per_Thread > k; ){
+		initial_Conditions(parameters, y_t, &y);
+		calc_eccentricity(parameters, &eccentricity, &xx, y_t);
+		//printf("%Lf\n", eccentricity);
+		if((y!=0) && (xx>=0) && (eccentricity < 0.999)) {
+        		collision_process(parameters, y_t, &validity, &time_of_ionization, acc, spline/*, &k*/);
+			Statistics(parameters, &local_IonisationStatist ,y_t, validity, iNumjob_per_Thread, &k, &time_of_ionization);
+        	}
 	 }
 	 
-		gsl_spline_free (spline);
-		gsl_interp_accel_free (acc);
-//     std::cout << "The value of iValue is: " << parameters->iValue << '\t' << y << std::endl;
+	gsl_spline_free (spline);
+	gsl_interp_accel_free (acc);
+
 #pragma omp critical
         {
                 IonisationStatist->ionisedElectron.insert(std::end(IonisationStatist->ionisedElectron), std::begin(local_IonisationStatist.ionisedElectron), std::end(local_IonisationStatist.ionisedElectron)); //ionisation_px.insert(std::end(IonisationStatist->ionisation_px), std::begin(local_IonisationStatist.ionisation_px), std::end(local_IonisationStatist.ionisation_px));
@@ -633,8 +519,8 @@ long double time_of_ionization;
                 IonisationStatist->anomal_dt += local_IonisationStatist.anomal_dt;
 
                 for(i=0; i < parameters->meretrDistribution; i++){
-                parameters->rDistribution[i] += local_rDistribution[i];
-                parameters->energyDistribution[i] += local_energyDistribution[i];
+                	parameters->rDistribution[i] += local_rDistribution[i];
+                	parameters->energyDistribution[i] += local_energyDistribution[i];
                 }
      }
 }
@@ -658,134 +544,121 @@ void StatisticsKiir(DATA* parameters, IonisationStatistics* IonisationStatist){
                 myfile << "# ex\tey\tez\tvx\tvy\tvz\tpx\tpy\tpz\tEtotal\tEkin\tEpot\ttime_of_ionization\n";
 
         for(std::vector<std::vector<long double>>::iterator it = IonisationStatist->ionisedElectron.begin(); it != IonisationStatist->ionisedElectron.end(); ++it){
-                        for(std::vector<long double>::iterator col = it->begin(); col != it->end(); ++col){
-                myfile << (*col) << '\t'; //it[0] << '\t' << it[1] << '\t' << *it[2] << '\t' << *it[3] << '\t' << *it[4] << '\t' << *it[5] << '\t' << *it[6] << '\t' << *it[7] << '\t' << *it[8] << '\t' << *it[9] << '\t' << *it[10] << '\t' << *it[11] << std::endl;
-                        }
-               myfile << '\n' ;
+                for(std::vector<long double>::iterator col = it->begin(); col != it->end(); ++col){
+			myfile << (*col) << '\t';
+                }
+        	myfile << '\n' ;
         }
         myfile.close();
 }
 
 void normal(long double *Distribution, int meretrDistribution, int Num, long double drDistribution, long double* error_of_distribution){
-int i;
-//printf("\n");
+	int i;
         for(i=0; i<meretrDistribution; i++){
-                error_of_distribution[i]=sqrt(Distribution[i]);
-
-                }
-    for(i=0; i<meretrDistribution; i++){
-          Distribution[i]/=Num*drDistribution;
-                  error_of_distribution[i]/=Num*drDistribution;
-//    		printf("%Lf\t%Lf\n",Distribution[i], error_of_distribution[i]);
+        	error_of_distribution[i]=sqrt(Distribution[i]);
+        }
+	for(i=0; i<meretrDistribution; i++){
+        	Distribution[i]/=Num*drDistribution;
+                error_of_distribution[i]/=Num*drDistribution;
         }
 }
 
 void eloszlasKiir(DATA* parameters, int Num){
         int l;
 
-
         normal(parameters->rDistribution, parameters->meretrDistribution, Num, parameters->drDistribution, parameters->error_of_rDistribution);
         normal(parameters->energyDistribution, parameters->meretrDistribution, Num, parameters->VelocityMax/parameters->rMax*parameters->drDistribution, parameters->error_of_energyDistribution);
 
-        FILE *fp/*, *bf*/;
-                fp=fopen("eloszlas.txt","w");
-                //bf=fopen("vEloszlas.txt","w");
-                        for(l=0; l<parameters->meretrDistribution-1; l++){
-                                fprintf(fp,"%Lf\t%Lf\t%Lf\t%Lf\t%Lf\t%Lf\n",(l+0.5)*parameters->drDistribution, parameters->rDistribution[l], parameters->error_of_rDistribution[l] ,(l+0.5)*parameters->drDistribution*parameters->VelocityMax/parameters->rMax, parameters->energyDistribution[l], parameters->error_of_energyDistribution[l]);
-                        }
-                fclose(fp);
+        FILE *fp;
+        fp=fopen("eloszlas.txt","w");
+        for(l=0; l<parameters->meretrDistribution-1; l++){
+        	fprintf(fp,"%Lf\t%Lf\t%Lf\t%Lf\t%Lf\t%Lf\n",(l+0.5)*parameters->drDistribution, parameters->rDistribution[l], parameters->error_of_rDistribution[l] ,(l+0.5)*parameters->drDistribution*parameters->VelocityMax/parameters->rMax, parameters->energyDistribution[l], parameters->error_of_energyDistribution[l]);
+        }
+	fclose(fp);
 }
 
 void Intensity (DATA* parameters, char* waveFormFilename){
-     double telj;
-     char* c;
-     char f[128];
-     int j=0;
-     c=strstr(waveFormFilename,"Wcm");
-     for (j=0 ;((*(c-j-1)-'0')<10) && ((*(c-j-1)-'0')>=0) || (*(c-j-1)=='e') || (*(c-j-1)=='+') || (*(c-j-1)=='.'); j++){ *(f+j)=*(c-j-1);}
-     *(f+j)='\0';
-//     pontos(f);
-     strrev(f);
-     telj=atof(f);
-     parameters->ldIntensity = telj;
-     }
+	double telj;
+	char* c;
+	char f[128];
+	int j=0;
+	c=strstr(waveFormFilename,"Wcm");
+	for (j=0 ;((*(c-j-1)-'0')<10) && ((*(c-j-1)-'0')>=0) || (*(c-j-1)=='e') || (*(c-j-1)=='+') || (*(c-j-1)=='.'); j++){ *(f+j)=*(c-j-1);}
+	*(f+j)='\0';
+	strrev(f);
+	telj=atof(f);
+	parameters->ldIntensity = telj;
+}
 	 
 void Pulsewidth (DATA* parameters, char* waveFormFilename){
-     double telj;
-     char* c;
-     char f[128];
-     int j=0;
-     c=strstr(waveFormFilename,"fs");
-     for (j=0 ;(((*(c-j-1)-'0')<10) && ((*(c-j-1)-'0')>=0) || (*(c-j-1)=='e') || (*(c-j-1)=='.')); j++){ *(f+j)=*(c-j-1);}
-     *(f+j)='\0';
-//     pontos(f);
-     strrev(f);
-	 sscanf(f, "%le",&telj);
-     //telj=atof(f);
-     parameters->ldPulseWidth = telj;
-     }
+	double telj;
+	char* c;
+	char f[128];
+	int j=0;
+	c=strstr(waveFormFilename,"fs");
+	for (j=0 ;(((*(c-j-1)-'0')<10) && ((*(c-j-1)-'0')>=0) || (*(c-j-1)=='e') || (*(c-j-1)=='.')); j++){ *(f+j)=*(c-j-1);}
+	*(f+j)='\0';
+	strrev(f);
+	sscanf(f, "%le",&telj);
+	parameters->ldPulseWidth = telj;
+}
 	 
 void GroupDelayDispersion (DATA* parameters, char* waveFormFilename){
-     double telj;
-     char* c;
-     char f[128];
-     int j=0;
-     c=strstr(waveFormFilename,"GDD");
-     for (j=0 ;(((*(c-j-1)-'0')<10) && ((*(c-j-1)-'0')>=0) || (*(c-j-1)=='e') || (*(c-j-1)=='.') || (*(c-j-1)=='-')); j++){ *(f+j)=*(c-j-1);}
-     *(f+j)='\0';
-//     pontos(f);
-     strrev(f);
-     telj=atof(f);
-     parameters->ldGDD = telj;
-     }
+	double telj;
+	char* c;
+	char f[128];
+	int j=0;
+	c=strstr(waveFormFilename,"GDD");
+	for (j=0 ;(((*(c-j-1)-'0')<10) && ((*(c-j-1)-'0')>=0) || (*(c-j-1)=='e') || (*(c-j-1)=='.') || (*(c-j-1)=='-')); j++){ *(f+j)=*(c-j-1);}
+	*(f+j)='\0';
+	strrev(f);
+	telj=atof(f);
+	parameters->ldGDD = telj;
+}
 
 void ThirdOrderDispersion (DATA* parameters, char* waveFormFilename){
-     double telj;
-     char* c;
-     char f[128];
-     int j=0;
-     c=strstr(waveFormFilename,"TOD");
-     for (j=0 ;(((*(c-j-1)-'0')<10) && ((*(c-j-1)-'0')>=0) || (*(c-j-1)=='e') || (*(c-j-1)=='.') || (*(c-j-1)=='-')); j++){ *(f+j)=*(c-j-1);}
-     *(f+j)='\0';
-//     pontos(f);
-     strrev(f);
-     telj=atof(f);
-     parameters->ldTOD= telj;
-     }
+	double telj;
+	char* c;
+	char f[128];
+	int j=0;
+	c=strstr(waveFormFilename,"TOD");
+	for (j=0 ;(((*(c-j-1)-'0')<10) && ((*(c-j-1)-'0')>=0) || (*(c-j-1)=='e') || (*(c-j-1)=='.') || (*(c-j-1)=='-')); j++){ *(f+j)=*(c-j-1);}
+	*(f+j)='\0';
+	strrev(f);
+	telj=atof(f);
+	parameters->ldTOD= telj;
+}
 	 
 void FourthOrderDispersion (DATA* parameters, char* waveFormFilename){
-     double telj;
-     char* c;
-     char f[128];
-     int j=0;
-     c=strstr(waveFormFilename,"FOD");
-     for (j=0 ;(((*(c-j-1)-'0')<10) && ((*(c-j-1)-'0')>=0) || (*(c-j-1)=='e') || (*(c-j-1)=='.') || (*(c-j-1)=='-')); j++){ *(f+j)=*(c-j-1);}
-     *(f+j)='\0';
-//     pontos(f);
-     strrev(f);
-     telj=atof(f);
-     parameters->ldFOD= telj;
-     }
+	double telj;
+	char* c;
+	char f[128];
+	int j=0;
+	c=strstr(waveFormFilename,"FOD");
+	for (j=0 ;(((*(c-j-1)-'0')<10) && ((*(c-j-1)-'0')>=0) || (*(c-j-1)=='e') || (*(c-j-1)=='.') || (*(c-j-1)=='-')); j++){ *(f+j)=*(c-j-1);}
+	*(f+j)='\0';
+	strrev(f);
+	telj=atof(f);
+	parameters->ldFOD= telj;
+}
 	 
 void CEP_read (DATA* parameters, char* waveFormFilename){
-     double telj;
-     char* c;
-     char f[128];
-     int j=0;
-     c=strstr(waveFormFilename,"CEP");
-     for (j=0 ;(((*(c-j-1)-'0')<10) && ((*(c-j-1)-'0')>=0) || (*(c-j-1)=='-')); j++){ *(f+j)=*(c-j-1);}
-     *(f+j)='\0';
-//     pontos(f);
-     strrev(f);
-     telj=atof(f);
-     parameters->ldCEP= telj;
-     }
+	double telj;
+	char* c;
+	char f[128];
+	int j=0;
+	c=strstr(waveFormFilename,"CEP");
+	for (j=0 ;(((*(c-j-1)-'0')<10) && ((*(c-j-1)-'0')>=0) || (*(c-j-1)=='-')); j++){ *(f+j)=*(c-j-1);}
+	*(f+j)='\0';
+	strrev(f);
+	telj=atof(f);
+	parameters->ldCEP= telj;
+}
 	 
 void additionalInformationModify(DATA* parameters){
 	char add[4096];
 	sprintf(add, "_%gWcm_%gfs_%gCEP_%gGDD_%gTOD_%gFOD_%gepsilon", parameters->ldIntensity, parameters->ldPulseWidth,parameters->ldCEP ,parameters->ldGDD, parameters->ldTOD, parameters->ldFOD, parameters->dt);
 	parameters->additionalInfo1 = parameters->additionalInfo + add;
-//	std::cout << parameters->additionalInfo << std::endl;
 }
 
 void waveForm_read(DATA* parameters, char* waveFormFilename){
@@ -802,30 +675,20 @@ void waveForm_read(DATA* parameters, char* waveFormFilename){
 	int i, size1 = 0;
 	parameters->waveForm_t = NULL;
 	parameters->waveForm_A = NULL;
-			if((fp=fopen(waveFormFilename,"r"))==NULL) {perror("I can't open the waveForm file!\n");}
+		if((fp=fopen(waveFormFilename,"r"))==NULL) {perror("I can't open the waveForm file!\n");}
 	 
-			for(i=0;!feof(fp);i++){
-                      size1+=sizeof(double);
-                      fscanf(fp,"%le %le %le\n",&t, &Amplitude, &Envelope);
-                      parameters->waveForm_t = (double*) realloc (parameters->waveForm_t,size1);
-                      parameters->waveForm_A = (double*) realloc (parameters->waveForm_A,size1);
-                      parameters->waveForm_t[i] = t;
-                      parameters->waveForm_A[i] = Amplitude;
-          }
-		  fclose(fp);
-	parameters->waveForm_size = i;
+	for(i=0;!feof(fp);i++){
+                size1+=sizeof(double);
+                fscanf(fp,"%le %le %le\n",&t, &Amplitude, &Envelope);
+                parameters->waveForm_t = (double*) realloc (parameters->waveForm_t,size1);
+                parameters->waveForm_A = (double*) realloc (parameters->waveForm_A,size1);
+                parameters->waveForm_t[i] = t;
+                parameters->waveForm_A[i] = Amplitude;
+        }
+	fclose(fp);
 	
+	parameters->waveForm_size = i;
 	parameters->dEnd = parameters->waveForm_t[parameters->waveForm_size-1] + 41341000;
-/*
-	FILE *bf;
-	bf = fopen("proba.txt","w");
-	for(i = 0; i < parameters->waveForm_size; i++){
-		fprintf(bf, "%le\t%le\n", parameters->waveForm_t[i], parameters->waveForm_A[i]);
-	}
-	fclose(bf);
-*/
-//printf("parameter: %lf\n", parameters->waveForm_t[i-1]);
-//printf("%lf\t%lf\t%lf\t%lf\n", parameters->ldIntensity, parameters->ldPulseWidth, parameters->ldGDD, parameters->ldTOD);
 }
 
 void atnevez(DATA* parameters, char* waveFormFilename){
@@ -848,77 +711,67 @@ class Electron{
 	public:
 		DATA parameters;
                 Electron(int z_electron, long double m_electron, int z_target, long double m_target, int N_electron) {
-				parameters.iz_electron = z_electron;
-				parameters.dm_electron = m_electron;
-				parameters.iz_target = z_target;
-				parameters.dm_target = m_target;
-				parameters.iN_electron = N_electron;
-                                parameters.c = 137.04;
+			parameters.iz_electron = z_electron;
+			parameters.dm_electron = m_electron;
+			parameters.iz_target = z_target;
+			parameters.dm_target = m_target;
+			parameters.iN_electron = N_electron;
+                        parameters.c = 137.04;
 
-                                parameters.dTarget_prefactor = 1/parameters.dm_target*(parameters.iz_target-parameters.iN_electron+1);
-                                parameters.dElectron_prefactor = 1/parameters.dm_electron*parameters.iz_electron;
-                                parameters.dTwoBody_Mass_Prefactor = 1/parameters.dm_electron + 1/parameters.dm_target;
+                        parameters.dTarget_prefactor = 1/parameters.dm_target*(parameters.iz_target-parameters.iN_electron+1);
+                        parameters.dElectron_prefactor = 1/parameters.dm_electron*parameters.iz_electron;
+                        parameters.dTwoBody_Mass_Prefactor = 1/parameters.dm_electron + 1/parameters.dm_target;
 
-				parameters.dBindingEnergy = -dBinding_energy_of_elements[parameters.iz_target-1][parameters.iz_target-parameters.iN_electron]/(2*dBinding_energy_of_elements[0][0]);
-           //                     parameters.dBindingEnergy = -0.795; std::cout << "Binding energy: " << parameters.dBindingEnergy << std::endl;
+			parameters.dBindingEnergy = -dBinding_energy_of_elements[parameters.iz_target-1][parameters.iz_target-parameters.iN_electron]/(2*dBinding_energy_of_elements[0][0]);
+			parameters.size = 51; parameters.dr = 0.0001; parameters.drDistribution = 0.05; parameters.VelocityMax = 3; parameters.RandNum_bmax=2;
+                        parameters.iSize = 12;
+				
+			parameters.kszi0 = dVector_kszi0[parameters.iN_electron];
+			parameters.kszi1 = dVector_kszi1[parameters.iN_electron];
+			parameters.eta0 = dVector_eta0[parameters.iN_electron];
+			parameters.eta1 = dVector_eta1[parameters.iN_electron];
+			parameters.kszi = parameters.kszi0+parameters.kszi1*(parameters.iz_target-parameters.iN_electron); 
+			parameters.eta = parameters.eta0+parameters.eta1*(parameters.iz_target-parameters.iN_electron);
+			parameters.RedukaltTomeg = parameters.dm_target*parameters.dm_electron/(parameters.dm_target+parameters.dm_electron);
+			
+			func_calc_rMax(&parameters);
+				
+			parameters.Period=2*M_PI*parameters.rMax/sqrt(2*fabs(parameters.dBindingEnergy)/parameters.RedukaltTomeg);
+				
+			parameters.meret = (int) round(parameters.rMax/parameters.dr+1); parameters.meretrDistribution=(int) round(parameters.rMax/parameters.drDistribution+1);
+			
+			if(parameters.dBindingEnergy == 0) {std::cout << "The Binding energy of the target is zero. The program exit." << std::endl; exit(1); }
 
-            //                    parameters.dBindingEnergy_of_Projectile = -dBinding_energy_of_elements[parameters.iz_projectile-1][0]/(2*dBinding_energy_of_elements[0][0]);
-//                                std::cout << parameters.dBindingEnergy << std::endl;
-				parameters.size = 51; parameters.dr = 0.0001; parameters.drDistribution = 0.05; parameters.VelocityMax = 3; parameters.RandNum_bmax=2;
-                                parameters.iSize = 12;
+			parameters.r = new long double [parameters.meret];
+			if(parameters.r == NULL) std::cout << "Nincs eleg memoria az 'r' valtozonak." << std::endl;
 				
-				parameters.kszi0 = dVector_kszi0[parameters.iN_electron];
-				parameters.kszi1 = dVector_kszi1[parameters.iN_electron];
-				parameters.eta0 = dVector_eta0[parameters.iN_electron];
-				parameters.eta1 = dVector_eta1[parameters.iN_electron];
-				parameters.kszi = parameters.kszi0+parameters.kszi1*(parameters.iz_target-parameters.iN_electron); 
-				parameters.eta = parameters.eta0+parameters.eta1*(parameters.iz_target-parameters.iN_electron);
-//                                std::cout << "kszi0: " << parameters.kszi0 << "\nkszi1: " << parameters.kszi1 << "\neta0: " << parameters.eta0 << "\neta1: " << parameters.eta1 << "\nkszi: " << parameters.kszi << "\neta: : " << parameters.eta << std::endl;
-				parameters.RedukaltTomeg = parameters.dm_target*parameters.dm_electron/(parameters.dm_target+parameters.dm_electron);
-//				parameters.denominator=(exp(parameters.kszi*r)-1)*(parameters.eta)/(parameters.kszi)+1;
+			parameters.Fuggveny = new long double [parameters.meret];
+			if(parameters.Fuggveny == NULL) std::cout << "Nincs eleg memoria 'Fuggveny' valtozonak." << std::endl;;
 				
-				func_calc_rMax(&parameters);
+			parameters.OmegaR = new long double [parameters.meret];
+			if(parameters.OmegaR == NULL) std::cout << "Nincs eleg memoria 'OmegaR' valtozonak." << std::endl;
 				
-				parameters.Period=2*M_PI*parameters.rMax/sqrt(2*fabs(parameters.dBindingEnergy)/parameters.RedukaltTomeg);
+			parameters.rDistribution = new long double [parameters.meretrDistribution];
+			if(parameters.rDistribution == NULL) std::cout << "Nincs eleg memoria 'rDistribution' valtozonak." << std::endl;
 				
-				parameters.meret = (int) round(parameters.rMax/parameters.dr+1); parameters.meretrDistribution=(int) round(parameters.rMax/parameters.drDistribution+1);
+			parameters.energyDistribution = new long double [parameters.meretrDistribution];
+			if(parameters.energyDistribution == NULL) std::cout << "Nincs eleg memoria 'energyDistribution' valtozonak."<< std::endl;
 				
-				if(parameters.dBindingEnergy == 0) {std::cout << "The Binding energy of the target is zero. The program exit." << std::endl; exit(1); }
-
-				parameters.r = new long double [parameters.meret];
-				if(parameters.r == NULL) std::cout << "Nincs eleg memoria az 'r' valtozonak." << std::endl;
+			parameters.error_of_rDistribution = new long double [parameters.meretrDistribution];
+			if(parameters.error_of_rDistribution == NULL) std::cout << "Nincs eleg memoria 'error_of_rDistribution' valtozonak." << std::endl;
 				
-				parameters.Fuggveny = new long double [parameters.meret];
-				if(parameters.Fuggveny == NULL) std::cout << "Nincs eleg memoria 'Fuggveny' valtozonak." << std::endl;;
-				
-				parameters.OmegaR = new long double [parameters.meret];
-				if(parameters.OmegaR == NULL) std::cout << "Nincs eleg memoria 'OmegaR' valtozonak." << std::endl;
-				
-				parameters.rDistribution = new long double [parameters.meretrDistribution];
-				if(parameters.rDistribution == NULL) std::cout << "Nincs eleg memoria 'rDistribution' valtozonak." << std::endl;
-				
-				parameters.energyDistribution = new long double [parameters.meretrDistribution];
-				if(parameters.energyDistribution == NULL) std::cout << "Nincs eleg memoria 'energyDistribution' valtozonak."<< std::endl;
-				
-				parameters.error_of_rDistribution = new long double [parameters.meretrDistribution];
-				if(parameters.error_of_rDistribution == NULL) std::cout << "Nincs eleg memoria 'error_of_rDistribution' valtozonak." << std::endl;
-				
-				parameters.error_of_energyDistribution = new long double [parameters.meretrDistribution];
-				if(parameters.error_of_energyDistribution == NULL) std::cout << "Nincs eleg memoria 'error_of_energyDistribution' valtozonak." << std::endl;
+			parameters.error_of_energyDistribution = new long double [parameters.meretrDistribution];
+			if(parameters.error_of_energyDistribution == NULL) std::cout << "Nincs eleg memoria 'error_of_energyDistribution' valtozonak." << std::endl;
 								
-				initialize_to_zero<long double>(parameters.meretrDistribution, 2, parameters.rDistribution, parameters.energyDistribution);
-//				initialize_to_zero<int>(parameters.size, 6, parameters.excitation, parameters.ionization, parameters.electronCapt, parameters.electronCapt_butlessthan_bindingEnergy, parameters.anomal_dt, parameters.anomal_Ete_Epe);
+			initialize_to_zero<long double>(parameters.meretrDistribution, 2, parameters.rDistribution, parameters.energyDistribution);
 
-                                table (&parameters);
+                        table (&parameters);
 																
-				std::string add;
-				if((parameters.iz_target - parameters.iN_electron ) == 0) {add = ""; }
-				else {add = std::to_string(parameters.iz_target - parameters.iN_electron) + "+"; }
+			std::string add;
+			if((parameters.iz_target - parameters.iN_electron ) == 0) {add = ""; }
+			else {add = std::to_string(parameters.iz_target - parameters.iN_electron) + "+"; }
 
-				parameters.additionalInfo = elements[parameters.iz_target - 1] + add;								
-				//    initialize_to_zero_double(meretrDistribution, 2, rDistribution, energyDistribution);	
-				
-				
+			parameters.additionalInfo = elements[parameters.iz_target - 1] + add;									
 		}
 		~Electron () {
 				delete[] parameters.r;
@@ -928,15 +781,7 @@ class Electron{
 				delete[] parameters.energyDistribution;
 				delete[] parameters.error_of_rDistribution;
 				delete[] parameters.error_of_energyDistribution;
-
-//				delete[] parameters.excitation;
-//				delete[] parameters.ionization;
-//				delete[] parameters.electronCapt;
-//				delete[] parameters.electronCapt_butlessthan_bindingEnergy;
-//				delete[] parameters.anomal_dt;
-//				delete[] parameters.anomal_Ete_Epe;
 		}
-		
 };
 
 void num_of_Threads(int* argc, int* thread_count, char** argv){
@@ -945,66 +790,57 @@ void num_of_Threads(int* argc, int* thread_count, char** argv){
         std::cin >> *thread_count;
     }
     else {
-            *thread_count = strtol(argv[1], NULL, 10);
+	*thread_count = strtol(argv[1], NULL, 10);
     }
-//            std::cout << *thread_count << std::endl;
 }
 
 int main(int argc, char* argv[]){
-//std::cout << elements[0] << ", " << elements[91] << ", " << elements[117] <<std::endl;
-clock_t t;
-long double run_time_stop, run_time_start=omp_get_wtime();
-t=clock();
-
+	clock_t t;
+	long double run_time_stop, run_time_start=omp_get_wtime();
+	
+	t=clock();
         srand(time(NULL));
-        
-		char *buffer;
-		if( (buffer = getcwd(NULL,0 ) ) == NULL ) perror("_getcwd error");
-//		printf("%s\n", buffer);
-		DIR *dir;
-		struct dirent *entry;
+	
+	char *buffer;
+	if( (buffer = getcwd(NULL,0 ) ) == NULL ) perror("_getcwd error");
+	DIR *dir;
+	struct dirent *entry;
         int thread_count;
         num_of_Threads(&argc, &thread_count, argv);
 
         int Num = 1200000, iCount, iRemainder;
         iCount = Num/thread_count;
         iRemainder = Num%thread_count;
-		char waveFormFilename[2048];
+	char waveFormFilename[2048];
         int z_electron = -1, z_target = 11, N_electron = 11;
-		
         long double m_electron = 1;
-		int m_target_int = 1836 * dMass_of_elements[z_target];
-		long double m_target = m_target_int;
+	int m_target_int = 1836 * dMass_of_elements[z_target];
+	long double m_target = m_target_int;
 
         class IonisationStatistics IonisationStatist;
-
         class Electron atom(z_electron, m_electron, z_target, m_target, N_electron);
-for(atom.parameters.dt = 1e-6; atom.parameters.dt >= 1e-6; atom.parameters.dt /= 10){
-if((dir=opendir(buffer))==NULL) perror("Error during Opendir() error");
-	while((entry=readdir(dir))!=NULL){
-		if(entry->d_name[0] =='w' && entry->d_name[1] =='a' && entry->d_name[2] =='v' && entry->d_name[3] =='e' && entry->d_name[4] =='F' && entry->d_name[5] =='o' && entry->d_name[6] =='r' && entry->d_name[7] =='m' && entry->d_name[8] =='_')
-		{
-//			sprintf(waveFormFilename,"%s/%s",buffer,entry->d_name);
-//			printf("%s\n", waveFormFilename);
-			IonisationStatist.initialize();
-			waveForm_read(&atom.parameters, entry->d_name);
-				#pragma omp parallel num_threads(thread_count)
-					{
-					distribution(iCount, iRemainder, thread_count, &atom.parameters, &IonisationStatist);
-					}
-			free(atom.parameters.waveForm_t);
-			free(atom.parameters.waveForm_A);
-//std::cout << "jol vagyok" << std::endl;
-//	getchar();
-			StatisticsKiir(&atom.parameters, &IonisationStatist);
-			eloszlasKiir(&atom.parameters ,Num);
-			atnevez(&atom.parameters, entry->d_name);
-		}
-}
-}
 
-run_time_stop=omp_get_wtime();
-t = clock() - t;
-printf ("It took me %ld clicks (%f seconds) in CPU time.\nIt took me %Lf seconds in run time.\n",t,((float)t)/CLOCKS_PER_SEC, run_time_stop-run_time_start);
+	for(atom.parameters.dt = 1e-6; atom.parameters.dt >= 1e-6; atom.parameters.dt /= 10){
+	if((dir=opendir(buffer))==NULL) perror("Error during Opendir() error");
+		while((entry=readdir(dir))!=NULL){
+			if(entry->d_name[0] =='w' && entry->d_name[1] =='a' && entry->d_name[2] =='v' && entry->d_name[3] =='e' && entry->d_name[4] =='F' && entry->d_name[5] =='o' && entry->d_name[6] =='r' && entry->d_name[7] =='m' && entry->d_name[8] =='_'){
+				IonisationStatist.initialize();
+				waveForm_read(&atom.parameters, entry->d_name);
+				#pragma omp parallel num_threads(thread_count)
+				{
+					distribution(iCount, iRemainder, thread_count, &atom.parameters, &IonisationStatist);
+				}
+				free(atom.parameters.waveForm_t);
+				free(atom.parameters.waveForm_A);
+				StatisticsKiir(&atom.parameters, &IonisationStatist);
+//				eloszlasKiir(&atom.parameters ,Num);
+				atnevez(&atom.parameters, entry->d_name);
+			}
+		}
+	}
+
+	run_time_stop=omp_get_wtime();
+	t = clock() - t;
+	printf ("It took me %ld clicks (%f seconds) in CPU time.\nIt took me %Lf seconds in run time.\n",t,((float)t)/CLOCKS_PER_SEC, run_time_stop-run_time_start);
 	return 0;
 }
