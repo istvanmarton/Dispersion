@@ -364,7 +364,7 @@ void collision_process(DATA* parameters, long double* y_t, int *validity, long d
         parameters->iValue = 6;
 
 //	FILE *fp;
-//	fp=fopen("trajectory.txt","w");
+//	fp=fopen("Electron_Energy.txt","w");
 
 for(i=0; bCondition; i++){
 
