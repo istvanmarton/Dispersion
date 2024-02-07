@@ -73,7 +73,7 @@ if(E_Te<0) { (local_IonisationStatist->excitation)++; (*k)++; }
 
 should be modified to
 
-if(E_Te<0) { (local_IonisationStatist->excitation)++; /*(*k)++;*/ }
+if(E_Te<0) { (local_IonisationStatist->excitation)++; /*(*k)++; */ }
 
 After compilation only one core should be used with the following command:
 
