@@ -66,10 +66,12 @@ The 'Electron_Energy.gnu' Gnuplot script is written to output 'Electron_Energy.e
    2. //fp=fopen("Electron_Energy.txt","w");
    3. //fprintf(fp,"%Lf\t%Lf\n",t, E_kin+E_pot);
    4. //fclose(fp);
+
 The line in the function 'Statistics'
 if(E_Te<0) { (local_IonisationStatist->excitation)++; (*k)++; }
 should be modified to
 if(E_Te<0) { (local_IonisationStatist->excitation)++; /*(*k)++;*/ }
+
 After compilation only one core should be used with the following command:
 
           ./CTMC_RKPD_SCR_OMP_CPP_GDD 1
