@@ -7,6 +7,7 @@ PulseWidth = 7;
 element = "H";
 bin_Energy = 2; # Energy bin in electronvolts
 bin_Momentum = 0.02; # Momentum bin in (Hartree) atomic units
+epsilon = 1e-6;
 maxRange = 0;
 maxE=0;
 str=[""];
@@ -25,7 +26,7 @@ for ind=1:length(value)
 
     A=[];
 	fileName=[""];
-	fileName = sprintf('Statistics_%s_%gWcm_%gfs_%gCEP_%gGDD_%gTOD_%gFOD_1e-06epsilon.txt',element, Intensity, PulseWidth, CEP, GDD, TOD, FOD);
+	fileName = sprintf('Statistics_%s_%gWcm_%gfs_%gCEP_%gGDD_%gTOD_%gFOD_%gepsilon.txt',element, Intensity, PulseWidth, CEP, GDD, TOD, FOD, epsilon);
 	A = dlmread(deblank(fileName), '\t', 9, 0);
 
     totalsum(ind) = size(A)(1);
@@ -70,9 +71,9 @@ for ind=1:length(value)
 	if (totalsum(ind) > 0)
 		CEP = value(ind);	
     		fileName_Energy=[""];
-    		fileName_Energy = sprintf('Energy_Unified_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_%gCEP_1e-06epsilon.txt',element, Intensity, PulseWidth, GDD, TOD, FOD, CEP);
+    		fileName_Energy = sprintf('Energy_Unified_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_%gCEP_%gepsilon.txt',element, Intensity, PulseWidth, GDD, TOD, FOD, CEP, epsilon);
     		fileName_Momentum=[""];
-    		fileName_Momentum = sprintf('Momentum_Unified_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_%gCEP_1e-06epsilon.txt',element, Intensity, PulseWidth, GDD, TOD, FOD, CEP);
+    		fileName_Momentum = sprintf('Momentum_Unified_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_%gCEP_%gepsilon.txt',element, Intensity, PulseWidth, GDD, TOD, FOD, CEP, epsilon);
     		kiir = [];
     		kiir = [kiir; unifiedRange_Energy', resE(:,ind)];
     		save ("-ascii", fileName_Energy, "kiir");
