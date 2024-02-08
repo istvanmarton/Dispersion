@@ -93,7 +93,9 @@ The 'Asymmetry.m' script was written to process the output files of the CTMC cod
 5. the kind of atom the calculations were performed (element)
 6. the bin width of the energy in electronvolts (energy_step)
 7. and the value corresponds to the step size of the ODE solver (epsilon).
+
 The 'Asymmetry.m' script has several outputs. They are the following:
+
 1. The plot of the distribution of electrons as a function of time of ionisation and final kinetic energy at a given GDD value. (i.e: 'Time_Energy_Na_4e12Wcm_4.5fs_0GDD_0TOD_0FOD_1e-6epsilon.png')
 2. The plot of the distribution of electrons as a function of time of ionisation and final kinetic energy at a given GDD value. In this case, the positive or negative direction of the momentum of the electrons are depicted. (i.e: 'Time_Energy_directionality_Na_4e12Wcm_4.5fs_0GDD_0TOD_0FOD_1e-6epsilon.png')
 3. 
