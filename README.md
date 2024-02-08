@@ -98,4 +98,11 @@ The 'Asymmetry.m' script has several outputs. They are the following:
 
 1. The plot of the distribution of electrons as a function of time of ionisation and final kinetic energy at a given GDD value. (i.e: 'Time_Energy_Na_4e12Wcm_4.5fs_0GDD_0TOD_0FOD_1e-6epsilon.png')
 2. The plot of the distribution of electrons as a function of time of ionisation and final kinetic energy at a given GDD value. In this case, the positive or negative direction of the momentum of the electrons are depicted. (i.e: 'Time_Energy_directionality_Na_4e12Wcm_4.5fs_0GDD_0TOD_0FOD_1e-6epsilon.png')
-3. 
+3. The ascii file of the distribution of electrons at a given GDD value. (i.e: 'Time_Energy_Na_4e12Wcm_4.5fs_0GDD_0TOD_0FOD_1e-6epsilon.txt')
+4. The ascii file of the normalized electron spectra. (i.e: 'Unified_normed_Na_4e12Wcm_4.5fs_0GDD_0TOD_0FOD_1e-6epsilon.txt')
+5. The plot of the normalized electron spectra. (i.e: 'Spectra_Na_4e12Wcm_4.5fs_0GDD_0TOD_0FOD_1e-6epsilon.jpg')
+6. The plot of the electron distribution at a given GDD and CEP value. The positive or negative direction of the momentum of the electrons and the temporal profile of the electric field are depicted. (i.e: 'Time_Energy_Na_0CEP_4e12Wcm_4.5fs_0GDD_0TOD_0FOD_1e-6epsilon.png')
+7. The plot of the electron distribution at a given GDD and CEP value. The temporal profile of the electric field is depicted. (i.e: 'Time_Energy_total_Na_0CEP_4e12Wcm_4.5fs_0GDD_0TOD_0FOD_1e-6epsilon.png')
+8. The ascii file of the electron distribution at a given GDD and CEP value. The positive or negative direction of the momentum of the electrons is written out. (i.e: 'Time_energy_Na_0CEP_4e12Wcm_4.5fs_0GDD.txt')
+9. The plot of the asymmetry map (see Eq. 18, and Fig 7 in article). (i.e: 'Asymmetry_Na_4e12Wcm_4.5fs_0CEP_0GDD_0TOD_0FOD_1e-6epsilon.jpg')
+10. The ascii file of the asymmetry map. (i.e: 'Asymmetry_Na_4e12Wcm_4.5fs_0GDD.txt')
