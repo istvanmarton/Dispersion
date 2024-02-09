@@ -103,7 +103,7 @@ On the right side of the figure, the (Garvey) potentials of the hydrogen and kry
 ## Figure 6
 Figure 6 can be generated the way Figure 3 and Figure 4, but at higher intensity. The 'Spectrum_HigherIntensity.gnu' script is for plotting the spectrum, asymmetry parameters, and the number of ionisation events. The 'TimeEnergy_HigherIntenstity.gnu' is for plotting the distribution of the photoionised electrons as the function of energy and time of ionisation. The output files of the scripts are 'Spectrum_HigherIntensity.eps' and 'TimeEnergy_HigherIntenstity.eps' respectively.
 
-## Figure 7,8
+## Figures 7,8
 
 ### Asymmetry.m
 The 'Asymmetry.m' script was written to process the output files of the CTMC code to generate asymmetry maps (Figure 7), and electron distributions as a function of ionisation time and energy of electrons. The following details should be given for the script:
