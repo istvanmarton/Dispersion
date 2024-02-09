@@ -18,7 +18,7 @@ fs_to_Hartree = 41.341;
 	fileName=[""];
 	fileName = sprintf('Statistics_%s_%gWcm_%gfs_%gCEP_%gGDD_%gTOD_%gFOD_%gepsilon.txt',element, Intensity, PulseWidth, CEP, GDD, TOD, FOD, epsilon);
 	A_CEP = [];
-	A_CEP = dlmread(deblank(fileName), '\t', 10, 0);
+	A_CEP = dlmread(deblank(fileName), '\t', 9, 0);
 	A = [A; A_CEP];
     end	
 
@@ -160,7 +160,7 @@ for CEP = CEP_begin:CEP_step:CEP_end
 	fileName=[""];
 	fileName = sprintf('Statistics_%s_%gWcm_%gfs_%gCEP_%gGDD_%gTOD_%gFOD_%gepsilon.txt',element, Intensity, PulseWidth, CEP, GDD, TOD, FOD, epsilon);
 	A_CEP = [];
-	A_CEP = dlmread(deblank(fileName), '\t', 10, 0);
+	A_CEP = dlmread(deblank(fileName), '\t', 9, 0);
 	positiveB = [];
 	negativeB = [];
 	positiveB = A_CEP(A_CEP(:,9)>0,:);
