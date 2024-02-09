@@ -306,21 +306,21 @@ void Lorentz_simple_calc(DATA* parameters, long double* t_ld, long double* y_t, 
 		dElectric_electron[2] = 0;
 	}
 
-	dB[0]=0;
-    dB[1]=dElectric[2]/parameters->c;
-    dB[2]=dElectric[1]/parameters->c;
+//	dB[0]=0;
+//	dB[1]=dElectric[2]/parameters->c;
+//	dB[2]=dElectric[1]/parameters->c;
 
-    dB_electron[0]=0;
-    dB_electron[1]=dElectric_electron[2]/parameters->c;
-    dB_electron[2]=dElectric_electron[1]/parameters->c;
+//	dB_electron[0]=0;
+//	dB_electron[1]=dElectric_electron[2]/parameters->c;
+//	dB_electron[2]=dElectric_electron[1]/parameters->c;
 
-    dEplusvxB[0] = dElectric[0]; //+ y_t[1]*dB[2]-y_t[2]*dB[1];
-    dEplusvxB[1] = dElectric[1]; // + y_t[2]*dB[0]-y_t[0]*dB[2];
-    dEplusvxB[2] = dElectric[2]; // + y_t[0]*dB[1]-y_t[1]*dB[0];
+	dEplusvxB[0] = dElectric[0]; //+ y_t[1]*dB[2]-y_t[2]*dB[1];
+	dEplusvxB[1] = dElectric[1]; // + y_t[2]*dB[0]-y_t[0]*dB[2];
+	dEplusvxB[2] = dElectric[2]; // + y_t[0]*dB[1]-y_t[1]*dB[0];
 
-    dEplusvxB_electron[0] = dElectric_electron[0]; //+ vxB_electron[0];
-    dEplusvxB_electron[1] = dElectric_electron[1]; //+ vxB_electron[1];
-    dEplusvxB_electron[2] = dElectric_electron[2]; //+ vxB_electron[2];
+	dEplusvxB_electron[0] = dElectric_electron[0]; //+ vxB_electron[0];
+	dEplusvxB_electron[1] = dElectric_electron[1]; //+ vxB_electron[1];
+	dEplusvxB_electron[2] = dElectric_electron[2]; //+ vxB_electron[2];
 }
 
 void coefficients_simple(DATA* parameters, long double y_t[], long double* t_giv, long double k_giv[], long double k_calc[], long double dt, gsl_interp_accel *acc, gsl_spline *spline){
