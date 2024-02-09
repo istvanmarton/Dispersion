@@ -31,7 +31,7 @@ command and can be invoked with the
 
      ./CTMC_RKPD_SCR_OMP_CPP_GDD Number_of_threads
 
-command where 'Number_of_threads' is the number of threads the program can use during the execution. The format of the code output is 'Statistics_Na_1e+15Wcm_7fs_0CEP_0GDD_0TOD_500FOD_1e-06epsilon.txt', where 'Na' refers to the element or ion (with the electrical charge of the ion), the '1e+15' refers to the intensity in $\frac{W}{cm^2}$, the CEP value is given by degrees, and the three kinds of higher-order dispersions are also indicated. The '1e-06epsilon' refers to the parameter that determines the precisity of the integration of the applied Dormand-Prince method. The first eight lines of the file contain general information about the calculations.
+command where 'Number_of_threads' is the number of threads the program can use during the execution. The format of the code output is 'Statistics_Na_1e+15Wcm_7fs_0CEP_0GDD_0TOD_500FOD_1e-06epsilon.txt', where 'Na' refers to the element or ion (with the electrical charge of the ion), the '1e+15' refers to the intensity in $\frac{W}{cm^2}$, the CEP value is given by degrees, and the three kinds of higher-order dispersions are also indicated. The '1e-06epsilon' refers to the parameter that determines the step size in the applied Dormand-Prince method. The first eight lines of the file contain general information about the calculations.
 1. In the first line, we can see the atomic number, the number of electrons, and the charge of the electron.
 2. The second line shows the masses of the target (atom or ion) and electron respectively.
 3. The third line shows values relevant to the calculations and can be obtained from the masses and charges of the electron and target.
@@ -48,18 +48,20 @@ The 'Energy_Momentum_CEP.m' and 'Energy_Momentum_CEP.gnu' scripts are written to
 1. The 'value' vector variable, refers to the CEP values of the waveforms in the calculations.
 2. The applied 'GDD', 'TOD', 'FOD', 'Intensity', and 'Pulsewidth' (FWHM) values.
 3. The element variable refers to the kind of atom or ion, the calculations were performed with.
-4. The 'epsilon' is corresponding to the adaptive step size in the ODE solver. For processing the files a proper bin width of energy 'bin_Energy' and momentum 'bin_Momentum' should be set. The energy bin width is given by electronvolts, meanwhile the momentum is given by atomic units.
+4. The 'epsilon' is corresponding to the adaptive step size in the ODE solver.
+5. For processing the files a proper bin width of energy 'bin_Energy' and momentum 'bin_Momentum' should be set. The energy bin width is given by electronvolts, meanwhile the momentum is given by atomic units.
 
 The Energy_Momentum_CEP.gnu is for plotting the results, the energy and momentum distribution, and the two waveforms that were used in the calculations. In the .gnu file, the following variables must be set:
 1. two CEP values (CEP1, CEP2)
 2. the applied higher-order dispersion (GDD, TOD, and FOD) values,
 3. the applied intensity 'Intensity', FWHM 'Pulsewidth', and the kind of atom 'element' should be set.
+4. the 'epsilon'.
 
 ## Figures 3,4
 The 'Time_Energy.m' script is written to process the output files resulting from the CTMC calculations. To run the script, the values should be set that are typical to the CTMC calculations. These are:
 1. The 'value' vector in line 1 describes the values of the higher-order dispersions. In case the calculations were performed with different TOD and FOD values, the 'GDD' variable should be modified to 'TOD' or 'FOD' in lines 23, 51, 59, and 71 respectively.
 2. The applied intensity 'Intensity' in line 5 and FWHM 'Pulsewidth' in line 6.
-3. The applied CEP values. 'CEP_begin' in line 7 and 'CEP_end' in line 9 stand for the minimal and maximal applied CEP values in degrees respectively. The 'CEP_step' variable stands for the step size between the maximal and minimal CEP values. For example: CEP_begin = 0, CEP_step = 120, and CEP_end = 240 it means the code vill deal with CEP values 0, 120, and 240 respectively.
+3. The applied CEP values. 'CEP_begin' in line 7 and 'CEP_end' in line 9 stand for the minimal and maximal applied CEP values in degrees respectively. The 'CEP_step' variable stands for the step size between the maximal and minimal CEP values. For example: CEP_begin = 0, CEP_step = 3, and CEP_end = 357 it means the code will deal with CEP values 0, 3, 6, ..., 357.
 4. The variable 'element' refers to the atom for which the CTMC calculations were performed.
 5. The 'epsilon' variable refers to the error in the adaptive step size Runge-Kutta method.
 
