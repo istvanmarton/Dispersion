@@ -17,7 +17,7 @@ set samples 20000
 set encoding utf8
 
 wlabel_pos_x = 0.02
-wlabel_pos_y = 0.94
+wlabel_pos_y = 0.96
 szin = "white"
 szin_line = "white"
 
@@ -96,10 +96,8 @@ set ytics offset ytics_offset_x, ytics_offset_y tc "black"
 set xtics offset xtics_offset_x, xtics_offset_y
 felirat = sprintf("(a) Na, %g CEP, %g fs^2 GDD", CEP, GDD);
 set label felirat at graph wlabel_pos_x, wlabel_pos_y tc rgb szin font p0 front
-fileName = 'Time_Energy_H_1e+15Wcm_7fs_-10GDD_0TOD_0FOD_1e-06epsilon.txt'
 set colorbox horizontal user origin graph colorbox_origin_x,colorbox_origin_y size graph colorbox_size_x,colorbox_size_y
 set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
-ti = sprintf('%d CEP, %d GDD',CEP, GDD)
 splot fileName_CEP_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):((fit_Amplitude+0)/maxy * change * $2):($0) with line lw line_width lc rgb szin_line # title "6 fs^2 GDD"
 
 CEP = 0
@@ -125,10 +123,8 @@ set ytics offset ytics_offset_x, ytics_offset_y tc "black"
 set xtics offset xtics_offset_x, xtics_offset_y
 felirat = sprintf("(b) Na, %g CEP, %g fs^2 GDD", CEP, GDD);
 set label felirat at graph wlabel_pos_x, wlabel_pos_y tc rgb szin font p0 front
-fileName = 'Time_Energy_H_1e+15Wcm_7fs_-10GDD_0TOD_0FOD_1e-06epsilon.txt'
 set colorbox horizontal user origin graph colorbox_origin_x,colorbox_origin_y size graph colorbox_size_x,colorbox_size_y
 set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
-ti = sprintf('%d CEP, %d GDD',CEP, GDD)
 splot fileName_CEP_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):((fit_Amplitude+0)/maxy * change * $2):($0) with line lw line_width lc rgb szin_line
 
 CEP = 0
@@ -155,10 +151,8 @@ set ytics offset ytics_offset_x, ytics_offset_y tc "black"
 set xtics offset xtics_offset_x, xtics_offset_y
 felirat = sprintf("(c) Na, %g CEP, %g fs^2 GDD", CEP, GDD);
 set label felirat at graph wlabel_pos_x, wlabel_pos_y tc rgb szin font p0 front
-fileName = 'Time_Energy_H_1e+15Wcm_7fs_-10GDD_0TOD_0FOD_1e-06epsilon.txt'
 set colorbox horizontal user origin graph colorbox_origin_x,colorbox_origin_y size graph colorbox_size_x,colorbox_size_y
 set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
-ti = sprintf('%d CEP, %d GDD',CEP, GDD)
 splot fileName_CEP_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):((fit_Amplitude+0)/maxy * change * $2):($0) with line lw line_width lc rgb szin_line
 
 CEP = 90
@@ -185,9 +179,7 @@ set ytics offset ytics_offset_x, ytics_offset_y tc "black"
 set xtics offset xtics_offset_x, xtics_offset_y
 felirat = sprintf("(d) Na, %g CEP, %g fs^2 GDD", CEP, GDD);
 set label "(d) Na, {/Symbol p}/2 CEP, 0 fs^2 GDD" at graph wlabel_pos_x, wlabel_pos_y tc rgb szin font p0 front
-fileName = 'Time_Energy_H_1e+15Wcm_7fs_-10GDD_0TOD_0FOD_1e-06epsilon.txt'
 set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
-ti = sprintf('%d CEP, %d GDD',CEP, GDD)
 splot fileName_CEP_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):((fit_Amplitude+0)/maxy * change * $2):($0) with line lw line_width lc rgb szin_line
 
 CEP = 0
@@ -214,9 +206,7 @@ set ytics offset ytics_offset_x, ytics_offset_y tc "black"
 set xtics offset xtics_offset_x, xtics_offset_y
 felirat = sprintf("(e) Na, %g CEP, %g fs^2 GDD", CEP, GDD);
 set label felirat at graph wlabel_pos_x, wlabel_pos_y tc rgb szin font p0 front
-fileName = 'Time_Energy_H_1e+15Wcm_7fs_-10GDD_0TOD_0FOD_1e-06epsilon.txt'
 set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
-ti = sprintf('%d CEP, %d GDD',CEP, GDD)
 splot fileName_CEP_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):((fit_Amplitude+0)/maxy * change * $2):($0) with line lw line_width lc rgb szin_line
 
 CEP = 0
@@ -244,9 +234,7 @@ set ytics offset ytics_offset_x, ytics_offset_y tc "black"
 set xtics offset xtics_offset_x, xtics_offset_y
 felirat = sprintf("(f) Na, %g CEP, %g fs^2 GDD", CEP, GDD);
 set label felirat at graph wlabel_pos_x, wlabel_pos_y tc rgb szin font p0 front
-fileName = 'Time_Energy_H_1e+15Wcm_7fs_-10GDD_0TOD_0FOD_1e-06epsilon.txt'
 set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
-ti = sprintf('%d CEP, %d GDD',CEP, GDD)
 splot fileName_CEP_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):((fit_Amplitude+0)/maxy * change * $2):($0) with line lw line_width lc rgb szin_line
 
 
@@ -281,9 +269,7 @@ set ytics offset ytics_offset_x, ytics_offset_y tc "black"
 set xtics offset xtics_offset_x, xtics_offset_y
 felirat = sprintf("(g) Na, %g fs^2 GDD", GDD);
 set label felirat at graph wlabel_pos_x, wlabel_pos_y tc rgb szin font p0 front
-fileName = 'Time_Energy_H_1e+15Wcm_7fs_-10GDD_0TOD_0FOD_1e-06epsilon.txt'
 set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
-ti = sprintf('%d CEP, %d GDD',CEP, GDD)
 splot fileName_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):((fit_Amplitude+0)/maxy * change * $3 * $3):($0) with line lw line_width lc rgb szin_line
 
 GDD = 0
@@ -310,9 +296,7 @@ set ytics offset ytics_offset_x, ytics_offset_y tc "black"
 set xtics offset xtics_offset_x, xtics_offset_y
 felirat = sprintf("(h) Na, %g fs^2 GDD", GDD);
 set label felirat at graph wlabel_pos_x, wlabel_pos_y tc rgb szin font p0 front
-fileName = 'Time_Energy_H_1e+15Wcm_7fs_-10GDD_0TOD_0FOD_1e-06epsilon.txt'
 set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
-ti = sprintf('%d CEP, %d GDD',CEP, GDD)
 splot fileName_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):((fit_Amplitude+0)/maxy * change * $3 * $3):($0) with line lw line_width lc rgb szin_line
 
 GDD = 5
@@ -339,10 +323,8 @@ set ytics offset ytics_offset_x, ytics_offset_y tc "black"
 set xtics offset xtics_offset_x, xtics_offset_y
 felirat = sprintf("(i) Na, %g fs^2 GDD", GDD);
 set label felirat at graph wlabel_pos_x, wlabel_pos_y tc rgb szin font p0 front
-fileName = 'Time_Energy_H_1e+15Wcm_7fs_-10GDD_0TOD_0FOD_1e-06epsilon.txt'
 set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
 set label "Intensity (10^{12} W cm^{-2})" font p1 tc "black" rotate by 90 left offset 0,0 at graph y2label_pos_x,y2label_pos_y
-ti = sprintf('%d CEP, %d GDD',CEP, GDD)
 splot fileName_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):((fit_Amplitude+0)/maxy * change * $3 * $3):($0) with line lw line_width lc rgb szin_line
 
 GDD = -10
@@ -369,9 +351,7 @@ set ytics offset ytics_offset_x, ytics_offset_y tc "black"
 set xtics offset xtics_offset_x, xtics_offset_y
 felirat = sprintf("(j) Na, %g fs^2 GDD", GDD);
 set label felirat at graph wlabel_pos_x, wlabel_pos_y tc rgb szin font p0 front
-fileName = 'Time_Energy_H_1e+15Wcm_7fs_-10GDD_0TOD_0FOD_1e-06epsilon.txt'
 set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
-ti = sprintf('%d CEP, %d GDD',CEP, GDD)
 splot fileName_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):((fit_Amplitude+0)/maxy * change * $3 * $3):($0) with line lw line_width lc rgb szin_line
 
 GDD = 10
@@ -399,9 +379,7 @@ set xtics offset xtics_offset_x, xtics_offset_y
 felirat = sprintf("(k) Na, %g fs^2 GDD", GDD);
 set label "Intensity (10^{12} W cm^{-2})" font p1 tc "black" rotate by 90 left offset 0,0 at graph y2label_pos_x,y2label_pos_y
 set label felirat at graph wlabel_pos_x, wlabel_pos_y tc rgb szin font p0 front
-fileName = 'Time_Energy_H_1e+15Wcm_7fs_-10GDD_0TOD_0FOD_1e-06epsilon.txt'
 set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
-ti = sprintf('%d CEP, %d GDD',CEP, GDD)
 splot fileName_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):((fit_Amplitude+0)/maxy * change * $3 * $3):($0) with line lw line_width lc rgb szin_line
 
 unset multiplot
