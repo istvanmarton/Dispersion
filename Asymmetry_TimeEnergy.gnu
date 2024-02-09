@@ -98,7 +98,7 @@ felirat = sprintf("(a) Na, %g CEP, %g fs^2 GDD", CEP, GDD);
 set label felirat at graph wlabel_pos_x, wlabel_pos_y tc rgb szin font p0 front
 set colorbox horizontal user origin graph colorbox_origin_x,colorbox_origin_y size graph colorbox_size_x,colorbox_size_y
 set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
-splot fileName_CEP_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):((fit_Amplitude+0)/maxy * change * $2):($0) with line lw line_width lc rgb szin_line # title "6 fs^2 GDD"
+splot fileName_CEP_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):(fit_Amplitude/maxy * change * $2):($0) with line lw line_width lc rgb szin_line # title "6 fs^2 GDD"
 
 CEP = 0
 GDD = -5
@@ -125,7 +125,7 @@ felirat = sprintf("(b) Na, %g CEP, %g fs^2 GDD", CEP, GDD);
 set label felirat at graph wlabel_pos_x, wlabel_pos_y tc rgb szin font p0 front
 set colorbox horizontal user origin graph colorbox_origin_x,colorbox_origin_y size graph colorbox_size_x,colorbox_size_y
 set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
-splot fileName_CEP_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):((fit_Amplitude+0)/maxy * change * $2):($0) with line lw line_width lc rgb szin_line
+splot fileName_CEP_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):(fit_Amplitude/maxy * change * $2):($0) with line lw line_width lc rgb szin_line
 
 CEP = 0
 GDD = -10
@@ -153,7 +153,7 @@ felirat = sprintf("(c) Na, %g CEP, %g fs^2 GDD", CEP, GDD);
 set label felirat at graph wlabel_pos_x, wlabel_pos_y tc rgb szin font p0 front
 set colorbox horizontal user origin graph colorbox_origin_x,colorbox_origin_y size graph colorbox_size_x,colorbox_size_y
 set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
-splot fileName_CEP_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):((fit_Amplitude+0)/maxy * change * $2):($0) with line lw line_width lc rgb szin_line
+splot fileName_CEP_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):(fit_Amplitude/maxy * change * $2):($0) with line lw line_width lc rgb szin_line
 
 CEP = 90
 GDD = 0
@@ -180,7 +180,7 @@ set xtics offset xtics_offset_x, xtics_offset_y
 felirat = sprintf("(d) Na, %g CEP, %g fs^2 GDD", CEP, GDD);
 set label "(d) Na, {/Symbol p}/2 CEP, 0 fs^2 GDD" at graph wlabel_pos_x, wlabel_pos_y tc rgb szin font p0 front
 set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
-splot fileName_CEP_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):((fit_Amplitude+0)/maxy * change * $2):($0) with line lw line_width lc rgb szin_line
+splot fileName_CEP_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):(fit_Amplitude/maxy * change * $2):($0) with line lw line_width lc rgb szin_line
 
 CEP = 0
 GDD = 5
@@ -207,7 +207,7 @@ set xtics offset xtics_offset_x, xtics_offset_y
 felirat = sprintf("(e) Na, %g CEP, %g fs^2 GDD", CEP, GDD);
 set label felirat at graph wlabel_pos_x, wlabel_pos_y tc rgb szin font p0 front
 set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
-splot fileName_CEP_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):((fit_Amplitude+0)/maxy * change * $2):($0) with line lw line_width lc rgb szin_line
+splot fileName_CEP_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):(fit_Amplitude/maxy * change * $2):($0) with line lw line_width lc rgb szin_line
 
 CEP = 0
 GDD = 10
@@ -235,7 +235,7 @@ set xtics offset xtics_offset_x, xtics_offset_y
 felirat = sprintf("(f) Na, %g CEP, %g fs^2 GDD", CEP, GDD);
 set label felirat at graph wlabel_pos_x, wlabel_pos_y tc rgb szin font p0 front
 set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
-splot fileName_CEP_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):((fit_Amplitude+0)/maxy * change * $2):($0) with line lw line_width lc rgb szin_line
+splot fileName_CEP_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):(fit_Amplitude/maxy * change * $2):($0) with line lw line_width lc rgb szin_line
 
 
 set yrange [0:fit_Amplitude]
@@ -270,7 +270,7 @@ set xtics offset xtics_offset_x, xtics_offset_y
 felirat = sprintf("(g) Na, %g fs^2 GDD", GDD);
 set label felirat at graph wlabel_pos_x, wlabel_pos_y tc rgb szin font p0 front
 set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
-splot fileName_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):((fit_Amplitude+0)/maxy * change * $3 * $3):($0) with line lw line_width lc rgb szin_line
+splot fileName_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):(fit_Amplitude/maxy * change * $3 * $3):($0) with line lw line_width lc rgb szin_line
 
 GDD = 0
 fileName_text = sprintf('./%dfs2/Time_Energy_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_1e-06epsilon.txt',abs(GDD), element, Intensity, PulseWidth, GDD, TOD, FOD);
@@ -297,7 +297,7 @@ set xtics offset xtics_offset_x, xtics_offset_y
 felirat = sprintf("(h) Na, %g fs^2 GDD", GDD);
 set label felirat at graph wlabel_pos_x, wlabel_pos_y tc rgb szin font p0 front
 set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
-splot fileName_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):((fit_Amplitude+0)/maxy * change * $3 * $3):($0) with line lw line_width lc rgb szin_line
+splot fileName_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):(fit_Amplitude/maxy * change * $3 * $3):($0) with line lw line_width lc rgb szin_line
 
 GDD = 5
 fileName_text = sprintf('./%dfs2/Time_Energy_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_1e-06epsilon.txt',abs(GDD), element, Intensity, PulseWidth, GDD, TOD, FOD);
@@ -325,7 +325,7 @@ felirat = sprintf("(i) Na, %g fs^2 GDD", GDD);
 set label felirat at graph wlabel_pos_x, wlabel_pos_y tc rgb szin font p0 front
 set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
 set label "Intensity (10^{12} W cm^{-2})" font p1 tc "black" rotate by 90 left offset 0,0 at graph y2label_pos_x,y2label_pos_y
-splot fileName_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):((fit_Amplitude+0)/maxy * change * $3 * $3):($0) with line lw line_width lc rgb szin_line
+splot fileName_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):(fit_Amplitude/maxy * change * $3 * $3):($0) with line lw line_width lc rgb szin_line
 
 GDD = -10
 fileName_text = sprintf('./%dfs2/Time_Energy_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_1e-06epsilon.txt',abs(GDD), element, Intensity, PulseWidth, GDD, TOD, FOD);
@@ -352,7 +352,7 @@ set xtics offset xtics_offset_x, xtics_offset_y
 felirat = sprintf("(j) Na, %g fs^2 GDD", GDD);
 set label felirat at graph wlabel_pos_x, wlabel_pos_y tc rgb szin font p0 front
 set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
-splot fileName_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):((fit_Amplitude+0)/maxy * change * $3 * $3):($0) with line lw line_width lc rgb szin_line
+splot fileName_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):(fit_Amplitude/maxy * change * $3 * $3):($0) with line lw line_width lc rgb szin_line
 
 GDD = 10
 fileName_text = sprintf('./%dfs2/Time_Energy_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_1e-06epsilon.txt',abs(GDD), element, Intensity, PulseWidth, GDD, TOD, FOD);
@@ -380,7 +380,7 @@ felirat = sprintf("(k) Na, %g fs^2 GDD", GDD);
 set label "Intensity (10^{12} W cm^{-2})" font p1 tc "black" rotate by 90 left offset 0,0 at graph y2label_pos_x,y2label_pos_y
 set label felirat at graph wlabel_pos_x, wlabel_pos_y tc rgb szin font p0 front
 set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
-splot fileName_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):((fit_Amplitude+0)/maxy * change * $3 * $3):($0) with line lw line_width lc rgb szin_line
+splot fileName_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):(fit_Amplitude/maxy * change * $3 * $3):($0) with line lw line_width lc rgb szin_line
 
 unset multiplot
 
