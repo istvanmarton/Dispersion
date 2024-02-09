@@ -141,6 +141,6 @@ The following details should be given for the script:
 3. The intensity in the 'Intensity' variable.
 4. The FWHM in the 'PulseWidth' variable.
 5. The value of 'epsilon'.
-6. The value of 'CEP' for every subplot it is needed.
+6. The value of 'CEP' for every subplot where it is needed.
 
 The script generates the 'Asymmetry_TimeEnergy.eps' file.
