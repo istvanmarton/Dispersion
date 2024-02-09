@@ -38,41 +38,42 @@ command and can be invoked with the
 
 command where 'Number_of_threads' is the number of threads the program can use during the execution. The format of the code output is 'Statistics_Na_1e+15Wcm_7fs_0CEP_0GDD_0TOD_500FOD_1e-06epsilon.txt', where 'Na' refers to the element or ion (with the electrical charge of the ion), the '1e+15'
  refers to the intensity in $\frac{W}{cm^2}$, the CEP, and the three kinds of higher-order dispersions. The '1e-06epsilon' refers to the parameter that determines the precisity of the integration of the applied Dormand-Prince method. The first eight lines of the file contain general information about the calculations. In the first line, we can see the atomic number, the number of electrons, and the charge of the electron. The second line shows the masses of the target (atom or ion) and electron respectively. The third line shows values relevant to the calculations and can be obtained from the masses and charges of the electron and target. The fourth line shows the binding energy in atomic units and electronvolts as well. The rest of the values in the fourth line describe the screened (Garvey) potential. Details of the Garvey potential can be found in R. H. Garvey, C. H. Jackman and A. E. S. Green, ["Independent-particle-model potentials for atoms and ions with 36<Z≤54 and a modified Thomas-Fermi atomic energy formula"](https://journals.aps.org/pra/abstract/10.1103/PhysRevA.12.1144), Physical Review A, **12**, 1144 (1975). The fifth and sixth lines show the number of excitation and ionisation events respectively. The seventh and eighth lines show the number of anomalous events. Further details are not given about the anomalous events. The rest of the file shows the relevant information about the ionised electrons in 13 columns. The quantities of the 13 columns are shown in line nine. These are the position (ex, ey, ez), the velocity (vx, vy, vz), the momentum (px, py, pz), the energy (Etotal), the kinetic and potential energies (Ekin, Epot) of the ionised electron(s) respectively. The (time_of_ionization) stands for the first moment when the energy of the electron was positive, namely when the electron ionised.
-# Wigner.gnu
-The Wigner.gnu is a Gnuplot script generating Wigner.eps which is Figure 1 in the article. It requires three waveform files with three corresponding Wigner functions. These files can be created with the Waveform.m script. The waveforms should be generated with $6.5 \times 10^{14} \frac{W}{cm^2}$ intensity 7 fs FWHM and 0 CEP. The three waveforms should be generated with $10 fs^2$ GDD, $90 fs^3$ TOD, and $500 fs^4$ FOD respectively.
-# Energy_Momentum_CEP.m and Energy_Momentum_CEP.gnu
-The Energy_Momentum_CEP.m and Energy_Momentum_CEP.gnu scripts are written to generate Figure 2 in the article. At first, we need to generate two waveforms with the Waveform.m file and calculate the electron statistics with the CTMC_RKPD_SCR_OMP_CPP_GDD.cpp code. To evaluate the output files, the Energy_Momentum_CEP.m should be used. The value vector variable in the first line refers to the CEP values of the waveforms in the calculations. The applied GDD, TOD, FOD, Intensity, and Pulsewidth (FWHM) values must be written From line 2 to line 6. The element variable refers to the atom, the calculations were performed. The 'epsilon' is corresponding to the adaptive step size in the ODE solver. For processing the files a proper bin width of energy (bin_Energy) and momentum (bin_Momentum) should be set. The energy bin width is given by electronvolts, meanwhile the momentum is given by atomic units. The Energy_Momentum_CEP.gnu is for plotting the results, the energy and momentum distribution, and the two waveforms that were used in the calculations. In the .gnu file, the two CEP values (CEP1, CEP2), the applied higher-order dispersions (GDD, TOD, and FOD), the applied intensity (Intensity), FWHM (Pulsewidth), and the kind of atom (element) should be set.
+## Figure 1
+The 'Wigner.gnu' is a Gnuplot script generating Wigner.eps which is Figure 1 in the article. It requires three waveform files with three corresponding Wigner functions. These files can be created with the Waveform.m script. The waveforms should be generated with $6.5 \times 10^{14} \frac{W}{cm^2}$ intensity 7 fs FWHM and 0 CEP. The three waveforms should be generated with $10 fs^2$ GDD, $90 fs^3$ TOD, and $500 fs^4$ FOD respectively.
+## Figure 2
+The 'Energy_Momentum_CEP.m' and 'Energy_Momentum_CEP.gnu' scripts are written to generate Figure 2 in the article. At first, we need to generate two waveforms with the Waveform.m file and calculate the electron statistics with the CTMC_RKPD_SCR_OMP_CPP_GDD.cpp code. To evaluate the output files, the Energy_Momentum_CEP.m should be used. The value vector variable in the first line refers to the CEP values of the waveforms in the calculations. The applied GDD, TOD, FOD, Intensity, and Pulsewidth (FWHM) values must be written From line 2 to line 6. The element variable refers to the atom, the calculations were performed. The 'epsilon' is corresponding to the adaptive step size in the ODE solver. For processing the files a proper bin width of energy (bin_Energy) and momentum (bin_Momentum) should be set. The energy bin width is given by electronvolts, meanwhile the momentum is given by atomic units. The Energy_Momentum_CEP.gnu is for plotting the results, the energy and momentum distribution, and the two waveforms that were used in the calculations. In the .gnu file, the two CEP values (CEP1, CEP2), the applied higher-order dispersions (GDD, TOD, and FOD), the applied intensity (Intensity), FWHM (Pulsewidth), and the kind of atom (element) should be set.
 
-# Time_Energy.m
-The Time_Energy.m script is written to process the output files resulting from the CTMC calculations. To run the script, the values should be set that are typical to the CTMC calculations. These are:
+## Figure 3,4
+The 'Time_Energy.m' script is written to process the output files resulting from the CTMC calculations. To run the script, the values should be set that are typical to the CTMC calculations. These are:
 1. The 'value' vector in line 1 describes the values of the higher-order dispersions. In case the calculations were performed with different TOD and FOD values, the 'GDD' variable should be modified to 'TOD' or 'FOD' in lines 23, 51, 59, and 71 respectively.
 2. The applied intensity 'Intensity' in line 5 and FWHM 'Pulsewidth' in line 6.
 3. The applied CEP values. 'CEP_begin' in line 7 and 'CEP_end' in line 9 stand for the minimal and maximal applied CEP values in degrees respectively. The 'CEP_step' variable stands for the step size between the maximal and minimal CEP values. For example: CEP_begin = 0, CEP_step = 120, and CEP_end = 240 it means the code vill deal with CEP values 0, 120, and 240 respectively.
 4. The variable 'element' refers to the atom for which the CTMC calculations were performed.
 5. The 'epsilon' variable refers to the error in the adaptive step size Runge-Kutta method.
+
 Upon successful execution, the script has three different kinds of output files.
 1. 'Unified_normed_...' files stand for the spectrum related to different higher-order dispersion values. The first column of the file is the energy in electronvolts. The second line is the normalized counts and the third line is the error of the counts.
 2. 'Time_Energy_...' files stand for the photoelectron distributions as a function of ionisation time and energy. The first column of the file is the time of ionisation. The second column is the energy of the ionised electrons, and the third column stands for the normalized count rate.
 3. 'totalsum_' file stands for the asymmetry parameter (see Eq. 17 in the article). The first column of the file stands for the different higher-order dispersion values. The second column is the count rate. The third column is the asymmetry parameter, and the fourth is the error belonging to the asymmetry parameter.
-## Spectrum_Asymmetry_H_Kr.gnu
-The Spectrum_Asymmetry_H_Kr.gnu is a Gnuplot script generating Figure 3 in the article. The script needs the output files 'Unified_normed_...' and 'totalsum_' generated by the 'Time_Energy.m' script. It is necessary to mention the script supposes that the relevant data can be found in four different directories, namely in 'GDD_H', 'TOD_H', 'FOD_H', and in 'GDD_Kr'. The output of the script is 'Spectrum_Asymmetry_H_Kr.eps'.
-## Time_Energy_H_Kr.gnu
-The Time_Energy_H_Kr.gnu is a Gnuplot script generating Figure 4 in the article. The script needs output files 'Time_Energy_...' generated by 'Time_Energy.m' script. It also requires corresponding Waveform files generated by Waveform.m and renamed by the CTMC code. The output of the script is 'Time_Energy_H_Kr.eps'.
-# Figure 5
+
+### Spectrum_Asymmetry_H_Kr.gnu
+The 'Spectrum_Asymmetry_H_Kr.gnu' is a Gnuplot script generating Figure 3 in the article. The script needs the output files 'Unified_normed_...' and 'totalsum_' generated by the 'Time_Energy.m' script. It is necessary to mention the script supposes that the relevant data can be found in four different directories, namely in 'GDD_H', 'TOD_H', 'FOD_H', and in 'GDD_Kr'. The output of the script is 'Spectrum_Asymmetry_H_Kr.eps'.
+### Time_Energy_H_Kr.gnu
+The 'Time_Energy_H_Kr.gnu' is a Gnuplot script generating Figure 4 in the article. The script needs output files 'Time_Energy_...' generated by 'Time_Energy.m' script. It also requires corresponding Waveform files generated by Waveform.m and renamed by the CTMC code. The output of the script is 'Time_Energy_H_Kr.eps'.
+
+## Figure 5
 The 'Electron_Energy.gnu' Gnuplot script is written to output 'Electron_Energy.eps' which is Figure 5 in the article. On the left side of the figure, the energy of the ionised electron as a function of time is depicted with the applied electric field. Therefore it requires 2 files.
 1. The waveform generated by 'Waveform.m', and
-2. 'Electron_Energy.txt' is the output of the 'CTMC_RKPD_SCR_OMP_CPP_GDD' file, although the code requires some modification to produce the necessary file. The following lines in the 'collision_process' function should be uncommented:
+2. 'Electron_Energy.txt' which is the output of the 'CTMC_RKPD_SCR_OMP_CPP_GDD.cpp' file, although the code requires some modification to produce the necessary output.
+
+To produce the 'Electron_Energy.txt' the following lines in the 'collision_process' function should be uncommented:
    1. //FILE *fp;
    2. //fp=fopen("Electron_Energy.txt","w");
    3. //fprintf(fp,"%Lf\t%Lf\n",t, E_kin+E_pot);
    4. //fclose(fp);
-
 The line in the function 'Statistics'
-
 if(E_Te<0) { (local_IonisationStatist->excitation)++; (*k)++; }
-
 should be modified to
-
 if(E_Te<0) { (local_IonisationStatist->excitation)++; /*(*k)++; */ }
 
 After compilation, only one core should be used with the following command:
@@ -81,10 +82,10 @@ After compilation, only one core should be used with the following command:
 
 The first and second columns of the resulting 'Electron_Energy.txt' are the time and the energy of the ionised electron respectively.
 On the right side of the figure, the (Garvey) potentials of the hydrogen and krypton are depicted. The potential of the hydrogen and krypton should be written to files 'H.txt' and 'Kr.txt', where the first column corresponds to the distance, and the second column corresponds to the potential energy.
-# Figure 6
+## Figure 6
 Figure 6 can be generated the way Figure 3 and Figure 4, but at higher intensity. The 'Spectrum_HigherIntensity.gnu' script is for plotting the spectrum, asymmetry parameters and number of ionisation events. The 'TimeEnergy_HigherIntenstity.gnu' is for plotting the distribution of the photoionised electrons as the function of energy and time of ionisation. The output files of the scripts are 'Spectrum_HigherIntensity.eps' and 'TimeEnergy_HigherIntenstity.eps' respectively.
-# Figure 7,8
-## Asymmetry.m
+## Figure 7,8
+### Asymmetry.m
 The 'Asymmetry.m' script was written to process the output files of the CTMC code to generate asymmetry maps (Figure 7), and electron distributions as a function of ionisation time and energy of electrons. The following details should be given for the script:
 1. the higher-order dispersion values the calculations were performed (GDD, TOD, FOD)
 2. the applied intensity (Intensity)
@@ -107,9 +108,9 @@ The 'Asymmetry.m' script has several outputs. They are the following:
 9. The plot of the asymmetry map (see Eq. 18, and Fig 7 in article). (i.e: 'Asymmetry_Na_4e12Wcm_4.5fs_0CEP_0GDD_0TOD_0FOD_1e-6epsilon.jpg')
 10. The ascii file of the asymmetry map. (i.e: 'Asymmetry_Na_4e12Wcm_4.5fs_0GDD.txt')
 
-## Asymmetry_Map.gnu
+### Asymmetry_Map.gnu
 The 'Asymmetry_Map.gnu' script plots the asymmetry maps, namely the Fig 7 in the article. As input, the script needs the 'Asymmetry_...' files generated by the 'Asymmetry.m' script. The output is 'Asymmetry_Map.eps'.
-## Asymmetry_TimeEnergy.gnu
+### Asymmetry_TimeEnergy.gnu
 The 'Asymmetry_TimeEnergy.gnu' script plots the electron distributions as a function of time and energy, and the corresponding temporal profile of the electric field or intensity. The script needs two kinds of input files:
 1. 'Time_energy_...' files generated by the 'Asymmetry.m' script as input (i.e: 'Time_energy_Na_0CEP_4e12Wcm_4.5fs_0GDD.txt' when the distribution of electrons at a given CEP and GDD value is depicted, or 'Time_Energy_Na_4e12Wcm_4.5fs_0GDD_0TOD_0FOD_1e-06epsilon.txt' when the distribution of electrons at a given GDD value is depicted).
 2. 'waveForm_...' files generated by 'Waveform.m' script and renamed by the CTMC program.
