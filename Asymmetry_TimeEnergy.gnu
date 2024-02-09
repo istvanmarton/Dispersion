@@ -5,6 +5,7 @@ FOD = 0
 element = 'Na'
 Intensity = 4e12
 PulseWidth = 4.5
+epsilon = 1e-6
 
 fit_Amplitude = 4.5
 maxy = 6.5
@@ -246,7 +247,7 @@ set ytics ("4" -4, "3" -3, "2" -2, "1" -1, "0" 0, "1" 1, "2" 2, "3" 3,"4" 4)
 set y2tics ("0" 0,"1" fit_Amplitude * 1/maxy, "2" fit_Amplitude * 2/maxy, "3" fit_Amplitude * 3/maxy, "4" fit_Amplitude * 4/maxy, "5" fit_Amplitude * 5/maxy, "6" fit_Amplitude * 6/maxy)
 change = 3.509445520589769e+4
 GDD = -5
-fileName_text = sprintf('./%dfs2/Time_Energy_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_1e-06epsilon.txt',abs(GDD), element, Intensity, PulseWidth, GDD, TOD, FOD);
+fileName_text = sprintf('./%dfs2/Time_Energy_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_%gepsilon.txt',abs(GDD), element, Intensity, PulseWidth, GDD, TOD, FOD, epsilon);
 waveForm_fileName = sprintf('./%dfs2/awaveForm_%gWcm_%gfs_%dCEP_%gGDD_%gTOD_%gFOD.txt',abs(GDD), Intensity, PulseWidth, 0, GDD, TOD, FOD);
 set size ratio 1/1
 set border linewidth 10
@@ -273,7 +274,7 @@ set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
 splot fileName_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):(fit_Amplitude/maxy * change * $3 * $3):($0) with line lw line_width lc rgb szin_line
 
 GDD = 0
-fileName_text = sprintf('./%dfs2/Time_Energy_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_1e-06epsilon.txt',abs(GDD), element, Intensity, PulseWidth, GDD, TOD, FOD);
+fileName_text = sprintf('./%dfs2/Time_Energy_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_%gepsilon.txt',abs(GDD), element, Intensity, PulseWidth, GDD, TOD, FOD, epsilon);
 waveForm_fileName = sprintf('./%dfs2/awaveForm_%gWcm_%gfs_%dCEP_%gGDD_%gTOD_%gFOD.txt',abs(GDD), Intensity, PulseWidth, 0, GDD, TOD, FOD);
 set size ratio 1/1
 set border linewidth 10
@@ -300,7 +301,7 @@ set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
 splot fileName_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):(fit_Amplitude/maxy * change * $3 * $3):($0) with line lw line_width lc rgb szin_line
 
 GDD = 5
-fileName_text = sprintf('./%dfs2/Time_Energy_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_1e-06epsilon.txt',abs(GDD), element, Intensity, PulseWidth, GDD, TOD, FOD);
+fileName_text = sprintf('./%dfs2/Time_Energy_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_%gepsilon.txt',abs(GDD), element, Intensity, PulseWidth, GDD, TOD, FOD, epsilon);
 waveForm_fileName = sprintf('./%dfs2/awaveForm_%gWcm_%gfs_%dCEP_%gGDD_%gTOD_%gFOD.txt',abs(GDD), Intensity, PulseWidth, 0, GDD, TOD, FOD);
 set size ratio 1/1
 set border linewidth 10
@@ -328,7 +329,7 @@ set label "Intensity (10^{12} W cm^{-2})" font p1 tc "black" rotate by 90 left o
 splot fileName_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):(fit_Amplitude/maxy * change * $3 * $3):($0) with line lw line_width lc rgb szin_line
 
 GDD = -10
-fileName_text = sprintf('./%dfs2/Time_Energy_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_1e-06epsilon.txt',abs(GDD), element, Intensity, PulseWidth, GDD, TOD, FOD);
+fileName_text = sprintf('./%dfs2/Time_Energy_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_%gepsilon.txt',abs(GDD), element, Intensity, PulseWidth, GDD, TOD, FOD, epsilon);
 waveForm_fileName = sprintf('./%dfs2/awaveForm_%gWcm_%gfs_%dCEP_%gGDD_%gTOD_%gFOD.txt',abs(GDD), Intensity, PulseWidth, 0, GDD, TOD, FOD);
 set size ratio 1/1
 set border linewidth 10
@@ -355,7 +356,7 @@ set cbtics font p0 offset cblabel_offset_x,cblabel_offset_y
 splot fileName_text u ($1):($2):(sqrt($3)) title "", waveForm_fileName u ($1/change_t):(fit_Amplitude/maxy * change * $3 * $3):($0) with line lw line_width lc rgb szin_line
 
 GDD = 10
-fileName_text = sprintf('./%dfs2/Time_Energy_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_1e-06epsilon.txt',abs(GDD), element, Intensity, PulseWidth, GDD, TOD, FOD);
+fileName_text = sprintf('./%dfs2/Time_Energy_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_%gepsilon.txt',abs(GDD), element, Intensity, PulseWidth, GDD, TOD, FOD, epsilon);
 waveForm_fileName = sprintf('./%dfs2/awaveForm_%gWcm_%gfs_%dCEP_%gGDD_%gTOD_%gFOD.txt',abs(GDD), Intensity, PulseWidth, 0, GDD, TOD, FOD);
 set size ratio 1/1
 set border linewidth 10
