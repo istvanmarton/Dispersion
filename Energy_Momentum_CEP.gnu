@@ -7,6 +7,7 @@ FOD =0;
 Intensity = 6.5e14;
 PulseWidth = 7;
 element = "H";
+epsilon = 1e-6
 set encoding iso_8859_1
 Hartree_to_eV = 27.211386245988
 Hartree_to_10GV = 5.14220674763e1
@@ -57,8 +58,8 @@ set tics font p0
 set xtics offset xtics_offset_x, xtics_offset_y
 set ytics offset ytics_offset_x, ytics_offset_y
 
-fileName_Energy1 = sprintf("Energy_Unified_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_%gCEP_1e-06epsilon.txt",element, Intensity, PulseWidth, GDD, TOD, FOD, CEP1)
-fileName_Energy2 = sprintf("Energy_Unified_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_%gCEP_1e-06epsilon.txt",element, Intensity, PulseWidth, GDD, TOD, FOD, CEP2)
+fileName_Energy1 = sprintf("Energy_Unified_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_%gCEP_%gepsilon.txt",element, Intensity, PulseWidth, GDD, TOD, FOD, CEP1, epsilon)
+fileName_Energy2 = sprintf("Energy_Unified_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_%gCEP_%gepsilon.txt",element, Intensity, PulseWidth, GDD, TOD, FOD, CEP2, epsilon)
 
 set xlabel "Energy (eV)" font p1 offset xlabel_offset_x, xlabel_offset_y
 set ylabel "Normalized Count" font p1 offset ylabel_offset_x, ylabel_offset_y
@@ -72,8 +73,8 @@ set logscale y
 set label "(a)" at screen 0.12,0.8 tc rgb "black" font p0 front
 plot [0:100][1e-3:1.1] fileName_Energy1 u (Hartree_to_eV * $1):($2) w l lw line_width lc rgb "red" lt 1 title "0", fileName_Energy2 u (Hartree_to_eV * $1):($2) with line lw line_width lc rgb "blue" lt 2 title "{/Symbol:Bold p/2}" #"90{\260}"
 
-fileName_Momentum1 = sprintf("Momentum_Unified_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_%gCEP_1e-06epsilon.txt",element, Intensity, PulseWidth, GDD, TOD, FOD, CEP1)
-fileName_Momentum2 = sprintf("Momentum_Unified_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_%gCEP_1e-06epsilon.txt",element, Intensity, PulseWidth, GDD, TOD, FOD, CEP2)
+fileName_Momentum1 = sprintf("Momentum_Unified_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_%gCEP_%gepsilon.txt",element, Intensity, PulseWidth, GDD, TOD, FOD, CEP1, epsilon)
+fileName_Momentum2 = sprintf("Momentum_Unified_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_%gCEP_%gepsilon.txt",element, Intensity, PulseWidth, GDD, TOD, FOD, CEP2, epsilon)
 
 set xlabel "Momentum (atomic unit)" font p1 offset xlabel_offset_x, xlabel_offset_y
 set ylabel "Normalized Count" font p1 offset ylabel_offset_x, ylabel_offset_y
