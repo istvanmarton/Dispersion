@@ -48,7 +48,6 @@ for ind=1:length(value)
     A=[]; y1=[];
     A = B{ind};
     	if (totalsum(ind) > 0)
-    		GDD = value(ind);
     		y1 = hist(A(:,10),unifiedRange);
     		res_Energy=[res_Energy, y1'];
  	endif
