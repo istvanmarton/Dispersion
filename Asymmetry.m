@@ -83,7 +83,7 @@ if (totalsum > 0)
 	colorbar();
 	print(fig2d_time_E, fileName_timeEnergy_fig)
 
-#This part plots the electron distribution at a given GDD value. The The positive or negative direction of the momentum of the electrons are depicted.
+#This part plots the electron distribution at a given GDD value. The positive or negative direction of the momentum of the electrons is depicted.
 	fileName_timeEnergy_fig_directionality = sprintf('Time_Energy_directionality_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_%gepsilon.png',element, Intensity, PulseWidth, GDD, TOD, FOD, epsilon);
 	fig2d_time_E_directionality = figure();
 	pcolor(bins{1} , bins{2}, sqrt(counts_positive'));
@@ -111,7 +111,7 @@ if (totalsum > 0)
 	end
 	fclose(fid);
 
-#This part writes out the electron spectra to a .txt file. The positive or negative direction of the momentum of the electrons are indicated.
+#This part writes out the electron spectra to a .txt file. The positive or negative direction of the momentum of the electrons is indicated.
   	fileName_timeEnergy_text_directionality = [""];
   	fileName_timeEnergy_text_directionality = sprintf('Time_Energy_directionality_%s_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_%gepsilon.txt',element, Intensity, PulseWidth, GDD, TOD, FOD, epsilon);
   	fid = fopen(fileName_timeEnergy_text_directionality,"w");
@@ -188,7 +188,7 @@ for CEP = CEP_begin:CEP_step:CEP_end
 	counts_positive = counts_positive/factor;
 	counts_negative = counts_negative/factor;
 
-#This part plots the electron distribution at a given GDD and CEP value. The The positive or negative direction of the momentum of the electrons and the temporal profile of the electric field are depicted.
+#This part plots the electron distribution at a given GDD and CEP value. The positive or negative direction of the momentum of the electrons and the temporal profile of the electric field are depicted.
 	fileName_timeEnergy_CEP_fig_directionality = sprintf('Time_Energy_%s_%dCEP_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_%gepsilon.png',element, CEP, Intensity, PulseWidth, GDD, TOD, FOD, epsilon);
 	waveForm_fileName = sprintf('awaveForm_%gWcm_%gfs_%dCEP_%gGDD_%gTOD_%gFOD.txt',Intensity, PulseWidth, CEP, GDD, TOD, FOD);
 	waveform = load(waveForm_fileName);
@@ -208,7 +208,7 @@ for CEP = CEP_begin:CEP_step:CEP_end
 	ylim([-bins{2}(length(bins{2})) bins{2}(length(bins{2}))])
 	print(fig2d_time_E_directionality, fileName_timeEnergy_CEP_fig_directionality)
 
-#This part plots the electron distribution at a given GDD and CEP value. The The temporal profile of the electric field is depicted.
+#This part plots the electron distribution at a given GDD and CEP value. The temporal profile of the electric field is depicted.
 	fileName_timeEnergy_CEP_fig = sprintf('Time_Energy_total_%s_%dCEP_%gWcm_%gfs_%gGDD_%gTOD_%gFOD_%gepsilon.png',element, CEP, Intensity, PulseWidth, GDD, TOD, FOD, epsilon);
 	fig2d_time_E = figure();
 	pcolor(bins{1} , bins{2}, sqrt(counts'));
@@ -221,7 +221,7 @@ for CEP = CEP_begin:CEP_step:CEP_end
 	xlim([bins{1}(1) bins{1}(length(bins{1}))])
 	print(fig2d_time_E, fileName_timeEnergy_CEP_fig)
 
-#This part writes out the electron distribution at a given GDD and CEP value. The The positive or negative direction of the momentum of the electrons are written out.
+#This part writes out the electron distribution at a given GDD and CEP value. The positive or negative direction of the momentum of the electrons is written out.
 	fileName_CEP_text = sprintf('Time_energy_%s_%dCEP_%gWcm_%gfs_%gGDD.txt',element, CEP, Intensity, PulseWidth, GDD);
 	fid = fopen(fileName_CEP_text,"w");
 	for ind_t = 1:length(bins{1}) #unified * Hartree_to_eV;
