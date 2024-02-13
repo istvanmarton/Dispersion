@@ -76,7 +76,6 @@ for ind=1:length(value)
 	bins{2} = 0:2:1.05*max(res(:,2));
 	[nn, bins{1}] = hist(res(:,1), length(bins{2}));
 	[counts] = hist3 (res, bins );
-	norm = sum(sum(counts));
 	
 	for ind_t = 1:length(bins{1})
 		for ind_E = 1:length(bins{2})
