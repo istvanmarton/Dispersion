@@ -45,8 +45,7 @@ The 'CTMC_RKPD_SCR_OMP_CPP.cpp' is a code to simulate ionisation processes of at
 
 $$
 \begin{equation}
-\omega(t) = \omega_0 + \beta \times t,
-\label{chirp_eq}
+\omega(t) = \omega_0 + \beta \times t,\label{chirp_eq}
 \end{equation}
 $$
 
