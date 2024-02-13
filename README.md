@@ -59,12 +59,12 @@ command, and can be invoked with the
 
      ./CTMC_RKPD_SCR_OMP_CPP Number_of_threads
 
-command, where 'Number_of_threads' is the number of threads the program uses during the execution. The following variables should be set in the code before execution:
+command, where 'Number_of_threads' is the number of threads the program uses during the execution. The following variables should be set in the main function before execution:
 1. The variables 'z_target', 'z_electron', 'N_electron', 'm_electron' and 'm_target' have the same role as in the previous 'CTMC_RKPD_SCR_OMP_CPP_GDD.cpp' code.
-2. The 'amplitude[]' variable is a vector standing for the 'y', and 'z' components of the electric field in atomic units and the shape of the envelope of the electric field.
+2. The 'amplitude[]' variable is a vector standing for the 'y', and 'z' components of the electric field in atomic units.
 3. The 'Polarisation_Phase' gives the phase between the 'y' and 'z' components of the electric field in degrees. In case it is $90^\circ$ and the two components of the electric field are the same, the incoming field is circularly (right) polarized.
 4. The 'Wavelength' and 'PulseWidth' are the wavelength in nanometers and (intensity) FWHM in femtoseconds respectively.
-5. The variable 'iDispersionCounter' corresponds to the number of chirp values, the code will perform calculations. To better understand it, the code calculates the maximum value of chirp (max chirp) to avoid calculating with negative frequencies, according to equation (1). The code will calculate with $2 \times iDispersionCounter$ values. When the 'iDispersionCounter' value is 1, it means, the code will calculate with chirp values (-max chirp, 0, max chirp).
+5. The variable 'iDispersionCounter' corresponds to the number of chirp values, the code will perform calculations. To better understand it, the code calculates the maximum value of chirp (max chirp) to avoid calculating with negative frequencies, according to equation (1). The code will calculate with $2 \times$ iDispersionCounter values. When the 'iDispersionCounter' value is 1, it means, the code will calculate with chirp values (-max chirp, 0, max chirp).
 6. The envelope of the electric field of the laser pulse. It can be either 'Gaussian', which means a Gaussian envelope, or 'cosSquare' which means the envelope is a cosine square.
 
 The code generates two kinds of output files:
