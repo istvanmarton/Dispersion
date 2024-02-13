@@ -42,7 +42,11 @@ command where 'Number_of_threads' is the number of threads the program can use d
 
 ### The CTMC_RKPD_SCR_OMP_CPP.cpp file
 The 'CTMC_RKPD_SCR_OMP_CPP.cpp' is a code to simulate ionisation processes of atoms with the CTMC method and with an ultrafast pulse having linear chirp. The angular frequency is determined by the
-$$ \omega(t) = \omega_0 + \beta \times t$,\label{chirp_eq} $$
+$$
+
+\omega(t) = \omega_0 + \beta \times t$,\label{chirp_eq}
+
+$$
 where $\omega(t)$ is the time-dependent angular frequency, $\beta$ is the chirp parameter, $\omega_0$ is the angular frequency corresponding to the central wavelength. The calculations are performed with random CEP values.
 
 The code can be compiled with the
@@ -63,7 +67,7 @@ command, where 'Number_of_threads' is the number of threads the program uses dur
 
 The code generates two kinds of output files:
 1. The temporal profile of the electric field of the ultrashort laser pulse (i.e.: 'ElectricField_0.000000.txt', where '0.000000' means the chirp value). The first column of the file consists of the time, and the second and third lines are the 'y', and 'z' components of the electric field.
-2. The result of the trajectories of the ionised electrons (i.e.: 'Statistics_H_0.000000.txt', where '0.000000' refers to the applied chirp, and the 'H' refers to hydrogen). The first eleven lines contain general informations about the calculations.
+2. The result of the trajectories of the ionised electrons (i.e.: 'Statistics_H_0.000000.txt', where '0.000000' refers to the applied chirp, and the 'H' refers to hydrogen). The first eleven lines contain general information about the calculations.
 The general informations are the following:
 1. Wavelength in nm, FWHM in fs, amplitudes of the two components of the electric field in Hartree atomic units, and the phase difference between the two components of the electric field 'y' and 'z'.
 2. The applied intensity in $\frac{W}{cm^2}$ and applied envelope.
