@@ -44,7 +44,7 @@ command where 'Number_of_threads' is the number of threads the program can use d
 The 'CTMC_RKPD_SCR_OMP_CPP.cpp' is a code to simulate ionisation processes of atoms with the CTMC method and with an ultrafast pulse having linear chirp. The angular frequency is determined by the
 
 \begin{align}
-$\omega(t) = \omega_0 + \beta \times t$,\label{chirp_eq}
+$\omega(t) = \omega_0 + \beta \times t$,\label{chirp_eq}\tag{1}
 \end{align}
 
 where $\omega(t)$ is the time-dependent angular frequency, $\beta$ is the chirp parameter, $\omega_0$ is the angular frequency corresponding to the central wavelength. The calculations are performed with random CEP values.
