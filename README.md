@@ -49,7 +49,7 @@ $$
 \end{equation}
 $$
 
-where $\omega(t)$ is the time-dependent angular frequency, $\beta$ is the chirp parameter, $\omega_0$ is the angular frequency corresponding to the central wavelength. The calculations are performed with random CEP values.
+equation, where $\omega(t)$ is the time-dependent angular frequency, $\beta$ is the chirp parameter, $\omega_0$ is the angular frequency corresponding to the central wavelength. The calculations are performed with random CEP values.
 
 The code can be compiled with the
 
