@@ -58,8 +58,9 @@ The Energy_Momentum_CEP.gnu is for plotting the results, the energy and momentum
 4. the 'epsilon'.
 
 ## Figures 3,4
+### Time_Energy.m
 The 'Time_Energy.m' script is written to process the output files resulting from the CTMC calculations. To run the script, the values should be set that are typical to the CTMC calculations. These are:
-1. The 'value' vector in line 1 describes the values of the higher-order dispersions. In case the calculations were performed with different TOD and FOD values, the 'GDD' variable should be modified to 'TOD' or 'FOD' in lines 23, 51, 59, and 71 respectively.
+1. The 'value' vector in line 1 describes the values of the higher-order dispersions. In case the calculations were performed with different TOD and FOD values, the 'GDD' variable should be modified to 'TOD' or 'FOD' in lines 23, 58, and 70 respectively.
 2. The applied intensity 'Intensity' in line 5 and FWHM 'Pulsewidth' in line 6.
 3. The applied CEP values. 'CEP_begin' in line 7 and 'CEP_end' in line 9 stand for the minimal and maximal applied CEP values in degrees respectively. The 'CEP_step' variable stands for the step size between the maximal and minimal CEP values. For example: CEP_begin = 0, CEP_step = 3, and CEP_end = 357 which means the code will deal with CEP values 0, 3, 6, ..., 357.
 4. The variable 'element' refers to the atom for which the CTMC calculations were performed.
