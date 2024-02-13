@@ -59,7 +59,7 @@ command, and can be invoked with the
 
      ./CTMC_RKPD_SCR_OMP_CPP Number_of_threads
 
-command, where 'Number_of_threads' is the number of threads the program uses during the execution. 
+command, where 'Number_of_threads' is the number of threads the program uses during the execution. The following variables should be set in the code before execution:
 1. The variables 'z_target', 'z_electron', 'N_electron', 'm_electron' and 'm_target' have the same role as in the previous 'CTMC_RKPD_SCR_OMP_CPP_GDD.cpp' code.
 2. The 'amplitude[]' variable is a vector standing for the 'y', and 'z' components of the electric field in atomic units and the shape of the envelope of the intensity.
 3. The 'Polarisation_Phase' gives the phase between the 'y' and 'z' components of the electric field in degrees. In case it is $90^\circ$ and the two components of the electric field are the same, the incoming field is circularly (right) polarized.
@@ -70,7 +70,8 @@ command, where 'Number_of_threads' is the number of threads the program uses dur
 The code generates two kinds of output files:
 1. The temporal profile of the electric field of the ultrashort laser pulse (i.e.: 'ElectricField_0.000000.txt', where '0.000000' means the chirp value). The first column of the file consists of the time, and the second and third lines are the 'y', and 'z' components of the electric field.
 2. The result of the trajectories of the ionised electrons (i.e.: 'Statistics_H_0.000000.txt', where '0.000000' refers to the applied chirp, and the 'H' refers to hydrogen). The first eleven lines contain general information about the calculations.
-The general informations are the following:
+
+The general information are the following:
 1. Wavelength in nm, FWHM in fs, amplitudes of the two components of the electric field in Hartree atomic units, and the phase difference between the two components of the electric field 'y' and 'z'.
 2. The applied intensity in $\frac{W}{cm^2}$ and applied envelope.
 3. The masses of the target and the electron.
