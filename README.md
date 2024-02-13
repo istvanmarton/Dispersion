@@ -42,9 +42,9 @@ command where 'Number_of_threads' is the number of threads the program can use d
 
 ### The CTMC_RKPD_SCR_OMP_CPP.cpp file
 The 'CTMC_RKPD_SCR_OMP_CPP.cpp' is a code to simulate ionisation processes of atoms with the CTMC method and with an ultrafast pulse having linear chirp. The angular frequency is determined by the
-\begin{equation}
-$\omega(t) = \omega_0 + \beta \times t$,
-\end{equation}
+\begin{align}
+$\omega(t) = \omega_0 + \beta \times t$,\label{chirp_eq}
+\end{align}
 where $\omega(t)$ is the time-dependent angular frequency, $\beta$ is the chirp parameter, $\omega_0$ is the angular frequency corresponding to the central wavelength. The calculations are performed with random CEP values.
 
 The code can be compiled with the
@@ -60,7 +60,21 @@ command, where 'Number_of_threads' is the number of threads the program uses dur
 2. The 'amplitude[]' variable is a vector standing for the 'y', and 'z' components of the electric field in atomic units.
 3. The 'Polarisation_Phase' gives the phase between the 'y' and 'z' components of the electric field in degrees. In case it is $90^\circ$ and the two components of the electric field are the same, the incoming field is circularly (right) polarized.
 4. The 'Wavelength' and 'PulseWidth' are the wavelength in nanometers and FWHM in femtoseconds respectively.
-5. The variable 'iDispersionCounter' corresponds to the number of chirp values, the code will perform calculations. To better understand it, the code calculates the maximum value of dispersion to avoid calculating with negative frequencies.
+5. The variable 'iDispersionCounter' corresponds to the number of chirp values, the code will perform calculations. To better understand it, the code calculates the maximum value of chirp (max chirp) to avoid calculating with negative frequencies, according to equation \ref{chirp_eq}. The code will calculate with $2 \times iDispersionCounter$ values. When the 'iDispersionCounter' value is 1, it means, the code will calculate with chirp values (-max chirp, 0, max chirp).
+
+The code generates two kinds of output files:
+1. The temporal profile of the electric field of the ultrashort laser pulse (i.e.: 'ElectricField_0.000000.txt', where '0.000000' means the chirp value). The first column of the file consists of the time, and the second and third lines are the 'y', and 'z' components of the electric field.
+2. The result of the trajectories of the ionised electrons (i.e.: 'Statistics_H_0.000000.txt', where '0.000000' refers to the applied chirp, and the 'H' refers to hydrogen). The first eleven lines contain general informations about the calculations.
+The general informations are the following:
+1. Wavelength in nm, FWHM in fs, amplitudes of the two components of the electric field in Hartree atomic units, and the phase difference between the two components of the electric field 'y' and 'z'.
+2. The applied intensity in $\frac{W}{cm^2}$ and applied envelope.
+3. The masses of the target and the electron.
+4. The binding energy both in atomic units and in electronvolts, and the parameters of the Garvey potential.
+5. The maximal value of chirp ('DispersionMax') and applied chirp value ('Dispersion').
+6. The number of excitation.
+7. The number of ionisation.
+8. The anomal events in lines 9 and 10.
+9. The rest of the file shows the relevant information about the ionised electrons in 15 columns. The first 13 columns are the same as it was in the output files by the 'CTMC_RKPD_SCR_OMP_CPP_GDD.cpp' code. The 14th column is the angular frequency of the electric field, when the electron is ionised. The 15th column is the CEP value at the moment of ionisation in radians.
 
 ## Figure 1
 The 'Wigner.gnu' is a Gnuplot script generating 'Wigner.eps' which is Figure 1 in the article. It requires three 'waveForm_...' files with three corresponding Wigner functions. These files can be created with the 'Waveform.m' script.
