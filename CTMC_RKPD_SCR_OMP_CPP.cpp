@@ -514,7 +514,7 @@ void StatisticsKiir(DATA* parameters, IonisationStatistics* IonisationStatist){
 
         std::ofstream myfile;
         myfile.open(fileName);
-	myfile << "#Wavelenth: " << parameters->dWavelength << " nm ,pulseWidth: " << parameters->dPulseWidth << " fs, Amplitude (Ey) in Hartree atomic units: " << parameters->dAmplitude_y << " Amplitude (Ez) in Hartree atomic units: " << parameters->dAmplitude_z << ", Phasedifference between polarisation 'y' and 'z': " << parameters->dPolarisation_phase*180/M_PI << "deg \n#Applied intensity (W/cm^2): " << 299792458*8.8541878176e-12/2 * (pow(5.14220674763e9*(parameters->dAmplitude_y),2) + pow(5.14220674763e9*(parameters->dAmplitude_z),2)) <<", carrier-encvelope phase (deg): " << parameters->fi_CEP*180/M_PI << "deg , Waveform: " << waveform << '\n';
+	myfile << "#Wavelenth: " << parameters->dWavelength << " nm ,pulseWidth: " << parameters->dPulseWidth << " fs, Amplitude (Ey) in Hartree atomic units: " << parameters->dAmplitude_y << " Amplitude (Ez) in Hartree atomic units: " << parameters->dAmplitude_z << ", Phasedifference between polarisation 'y' and 'z': " << parameters->dPolarisation_phase*180/M_PI << "deg \n#Applied intensity (W/cm^2): " << 299792458*8.8541878176e-12/2 * (pow(5.14220674763e9*(parameters->dAmplitude_y),2) + pow(5.14220674763e9*(parameters->dAmplitude_z),2)) << "deg , Waveform: " << waveform << '\n';
 	myfile << "#z target: " << parameters->iz_target <<", N electron: "<< parameters->iN_electron << ", z electron: " << parameters->iz_electron <<'\n';
 	myfile << "#m target: " << parameters->dm_target <<", m electron: "<< parameters->dm_electron << '\n';
 	myfile << "#Binding energy: " << parameters->dBindingEnergy << " (" << parameters->dBindingEnergy*2*dBinding_energy_of_elements[0][0] << " eV)" <<", kszi: " << parameters->kszi << ", eta: " << parameters->eta << ", kszi0: " << parameters->kszi0 << ", kszi1: " << parameters->kszi1 << ", eta0: " << parameters->eta0 << ", eta1: " << parameters->eta1 << '\n';
@@ -585,7 +585,7 @@ void eloszlasKiir(DATA* parameters, int Num){
 class Electron{
 	public:
 		DATA parameters;
-                Electron(int z_electron, long double m_electron, int z_target, long double m_target, int N_electron, long double* Amplitude, long double Wavelength, long double PulseWidth, long double fi_CEP, long double Polarisation_phase ,waveformType eWaveform) {
+                Electron(int z_electron, long double m_electron, int z_target, long double m_target, int N_electron, long double* Amplitude, long double Wavelength, long double PulseWidth, long double Polarisation_phase ,waveformType eWaveform) {
 				parameters.iz_electron = z_electron;
 				parameters.dm_electron = m_electron;
 				parameters.iz_target = z_target;
@@ -595,7 +595,6 @@ class Electron{
                                 parameters.dAmplitude_z = Amplitude[1];
                                 parameters.dWavelength = Wavelength;
                                 parameters.dPulseWidth = PulseWidth;
-                                parameters.fi_CEP = fi_CEP;
 
                                 parameters.dPolarisation_phase = Polarisation_phase;
                                 parameters.c = 137.04;
@@ -717,11 +716,11 @@ int main(int argc, char* argv[]){
         iRemainder = Num%thread_count;
         int z_electron = -1, z_target = 1, N_electron = 1;
         long double m_electron = 1, m_target = 1836;
-        long double Amplitude[] = {0, 0.136093513313091} /*Amplitude in Hartree atomic units*/, Wavelength = 800 /*Wavelength in nanometers*/, PulseWidth = 7/*1.0994*/ /*Pulsewidth in femtoseconds*/, fi_CEP=0 /* carrier envelope phase in deg */, Dispersion=0, 	Polarisation_Phase=0 /*phase difference of the two component of the polarisation in deg. In case of 90 it is circularly (right) polarised. In case of 270 it is circularly (left) polarised, provided the two components of Amplitudes are the same.*/;
+        long double Amplitude[] = {0, 0.136093513313091} /*Amplitude in Hartree atomic units*/, Wavelength = 800 /*Wavelength in nanometers*/, PulseWidth = 7/*1.0994*/ /*Pulsewidth in femtoseconds*//* carrier envelope phase in deg */ Polarisation_Phase=0 /*phase difference of the two component of the polarisation in deg. In case of 90 it is circularly (right) polarised. In case of 270 it is circularly (left) polarised, provided the two components of Amplitudes are the same.*/;
 
         class IonisationStatistics IonisationStatist;
 
-		class Electron atom(z_electron, m_electron, z_target, m_target, N_electron, Amplitude, Wavelength, PulseWidth, M_PI*fi_CEP/180, M_PI*Polarisation_Phase/180 , Gaussian);
+		class Electron atom(z_electron, m_electron, z_target, m_target, N_electron, Amplitude, Wavelength, PulseWidth, M_PI*Polarisation_Phase/180 , Gaussian);
 
 	for( iD = -iDispersionCounter; iD <= iDispersionCounter; iD++){
 		IonisationStatist.initialize();
