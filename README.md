@@ -40,6 +40,19 @@ command where 'Number_of_threads' is the number of threads the program can use d
 6. The seventh and eighth lines show the number of anomalous events. Further details are not given about the anomalous events.
 7. The rest of the file shows the relevant information about the ionised electrons in 13 columns. The quantities of the 13 columns are shown in line nine. These are the position (ex, ey, ez), the velocity (vx, vy, vz), the momentum (px, py, pz), the energy (Etotal), the kinetic and potential energies (Ekin, Epot) of the ionised electron(s) respectively. The (time_of_ionization) stands for the first moment when the energy of the electron was positive, namely when the electron ionised. These quantities are in (Hartree) atomic units.
 
+### The CTMC_RKPD_SCR_OMP_CPP.cpp file
+The 'CTMC_RKPD_SCR_OMP_CPP.cpp' is a code to simulate ionisation processes of atoms with CTMC method and with ultrafast pulse having linear chirp. The angular frequency is determined by the $\omega(t) = \omega_0 + \beta \times t$, where $\omega(t)$ is the time-dependent angular frequency, $\beta$ is the chirp parameter, $\omega_0$ is the angular frequency corresponding to the central wavelength. The calculations are performed with random CEP values.
+
+The code can be compiled with the
+
+     g++ CTMC_RKPD_SCR_OMP_CPP.cpp -fopenmp -o CTMC_RKPD_SCR_OMP_CPP
+
+command, and can be invoked with the
+
+     ./CTMC_RKPD_SCR_OMP_CPP Number_of_threads
+
+command, where 'Number_of_threads' is the number of threads the program uses during the execution.
+
 ## Figure 1
 The 'Wigner.gnu' is a Gnuplot script generating 'Wigner.eps' which is Figure 1 in the article. It requires three 'waveForm_...' files with three corresponding Wigner functions. These files can be created with the 'Waveform.m' script.
 
