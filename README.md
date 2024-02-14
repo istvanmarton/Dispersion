@@ -128,6 +128,7 @@ To produce the 'Electron_Energy.txt' the following lines in the 'collision_proce
    2. //fp=fopen("Electron_Energy.txt","w");
    3. //fprintf(fp,"%Lf\t%Lf\n",t, E_kin+E_pot);
    4. //fclose(fp);
+
 The line in the function 'Statistics'
 
      if(E_Te<0) { (local_IonisationStatist->excitation)++; (*k)++; }
