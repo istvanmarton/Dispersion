@@ -145,7 +145,7 @@ The first and second columns of the resulting 'Electron_Energy.txt' are the time
 On the right side of the figure, the (Garvey) potentials of the hydrogen and krypton are depicted. The potential of the hydrogen and krypton should be written to files 'H.txt' and 'Kr.txt', where the first column corresponds to the distance, and the second column corresponds to the potential energy.
 
 ## Figure 6
-Figure 6 can be generated the way Figure 3 and Figure 4, but at higher intensity. The 'Spectrum_HigherIntensity.gnu' script is for plotting the spectrum, asymmetry parameters, and the number of ionisation events. The 'TimeEnergy_HigherIntenstity.gnu' is for plotting the distribution of the photoionised electrons as the function of energy and time of ionisation. The output files of the scripts are 'Spectrum_HigherIntensity.eps' and 'TimeEnergy_HigherIntenstity.eps' respectively.
+Figure 6 can be generated the way Figure 3 and Figure 4, but at higher intensity. The 'Spectrum_HigherIntensity.gnu' script is for plotting the spectrum, asymmetry parameters, and the number of ionisation events. The 'TimeEnergy_HigherIntensity.gnu' is for plotting the distribution of the photoionised electrons as the function of energy and time of ionisation. The output files of the scripts are 'Spectrum_HigherIntensity.eps' and 'TimeEnergy_HigherIntensity.eps' respectively.
 
 ## Figures 7,8
 
