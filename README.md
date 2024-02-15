@@ -1,7 +1,7 @@
 # Dispersion
 This repository accompanies the publication
 
-> I. Márton, L. Sarkadi, ["Study of the effect of higher-order dispersions on photoionisation induced by ultrafast laser pulses applying a classical theoretical method"](https://www.nature.com/articles/s41598-022-18034-w), Scientific Reports, **12**, 13841 (2022).
+> I. Márton, L. Sarkadi, ["Study of the effect of higher-order dispersions on photoionisation induced by ultrafast laser pulses applying a classical theoretical method"](https://www.nature.com/articles/s41598-022-18034-w){:target="_blank"}, Scientific Reports, **12**, 13841 (2022).
 
 In this article, we investigated the effect of higher-order dispersion on ultrafast photoionisation. To produce the results, we used C++, Octave, and Gnuplot.
 
