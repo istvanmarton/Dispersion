@@ -118,8 +118,8 @@ ylim([f_lower f_upper])
 xlim([t_lower t_upper])
 xlabel("time (fs)")
 ylabel("angular frequency (1/fs)")
-f_lower_index = floor(f_lower/(f_modify(2)-f_modify(1)));
-f_upper_index = ceil(1 + f_upper/(f_modify(2)-f_modify(1)));
+f_lower_index = ceil(f_lower/(f_modify(2)-f_modify(1)));
+f_upper_index = floor(f_upper/(f_modify(2)-f_modify(1)));
 t_lower_index = lookup(t_modify, t_lower);
 t_upper_index = lookup(t_modify, t_upper);
 W_write = [];
